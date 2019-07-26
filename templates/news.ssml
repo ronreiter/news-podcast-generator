@@ -1,0 +1,9 @@
+<speak>
+<audio src="https://freesound.org/data/previews/460/460424_6300624-hq.mp3" />
+{% for item in news_data %}
+<audio src="https://freesound.org/data/previews/462/462187_9461949-hq.mp3" />
+{{ item.title }}
+{% for sentence in item.sentences %}
+{{ sentence }}{% endfor %}{% endfor %}
+<audio src="https://freesound.org/data/previews/460/460424_6300624-hq.mp3" />
+</speak>

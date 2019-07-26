@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:googleplay="https://www.google.com/schemas/play-podcasts/1.0/play-podcasts.xsd"
+     xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd">
+  <channel>
+    <title>Best of Hacker News</title>
+    <googleplay:author>Ron Reiter</googleplay:author>
+    <itunes:author>Ron Reiter</itunes:author>
+    <description>Listen in to a short summary of the best articles published on Hacker News.</description>
+    <googleplay:image href="https://storage.googleapis.com/bestofhn/hn.png"/>
+    <itunes:image href="https://storage.googleapis.com/bestofhn/hn.png"/>
+    <language>en-us</language>
+    <itunes:category text="News & Politics"/>
+    <itunes:category text="Business News"/>
+    <itunes:explicit>no</itunes:explicit>
+    {% for item in items %}
+    <item>
+      <title>Best of Hacker News - {{ item.nice_date }}</title>
+      <description>Listen in to a short summary of the best articles published on Hacker News. Episode of {{ item.nice_date }}</description>
+      <pubDate>{{ item.date }}</pubDate>
+      <enclosure url="https://storage.googleapis.com/bestofhn/{{ item.filename }}" type="audio/mpeg" length="{{ item.size }}"/>
+      <guid isPermaLink="false">https://storage.cloud.google.com/bestofhn/{{ item.filename }}</guid>
+      <itunes:summary>Listen in to a short summary of the best articles published on Hacker News. Episode of {{ item.nice_date }}</itunes:summary>
+      <itunes:duration>{{ item.duration }}</itunes:duration>
+      <itunes:explicit>no</itunes:explicit>
+
+    </item>
+    {% endfor %}
+  </channel>
+</rss>

@@ -1,0 +1,6 @@
+<speak>
+{{ title }}
+{% for sentence in sentences %}
+{{ sentence }}
+{% endfor %}
+</speak>

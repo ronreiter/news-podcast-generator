@@ -1,0 +1,6 @@
+google-api-python-client
+aylien-apiclient
+requests
+jinja2
+google-cloud-storage
+pydub
