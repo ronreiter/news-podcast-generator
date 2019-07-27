@@ -1,0 +1,13 @@
+<speak>
+    <par>
+        <media>
+            <audio src="https://storage.googleapis.com/bestofhn/resources/Home_Base_Groove.mp3"/>
+        </media>
+
+        <media begin="2s">
+            <speak>
+                Thanks for listening in! Tune in for tomorrow's podcast to get up to date on the latest news.
+            </speak>
+        </media>
+    </par>
+</speak>
