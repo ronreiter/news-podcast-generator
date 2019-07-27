@@ -6,7 +6,7 @@
 
         <media begin="2s">
             <speak>
-                Welcome to the Best of Hacker News daily podcast.
+                Welcome to the Best of Hacker News daily podcast for {{ news_date.strftime("%B %-d, %Y") }}
                 We bring you the latest news from Hacker News, every day.
             </speak>
         </media>

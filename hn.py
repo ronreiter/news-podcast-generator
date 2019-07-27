@@ -134,7 +134,7 @@ def single_file():
         f.write(raw_data)
 
 
-def generate_podcast(news_items, podcast_fn):
+def generate_podcast(news_items, news_date, podcast_fn):
     item_template = t.load(jinja2.Environment(), "item.ssml")
 
     items = []
@@ -153,14 +153,24 @@ def generate_podcast(news_items, podcast_fn):
         logging.info('saved %s' % blob_name)
         items.append(blob_name)
 
+    news_date_parsed = datetime.datetime.strptime(news_date, "%Y-%m-%d")
+    intro_file = os.path.join(TEMP_FOLDER, "intro_%s.wav" % news_date)
+    goodbye_file = os.path.join(TEMP_FOLDER, "goodbye.wav")
+
+    if not os.path.exists(intro_file):
+        open(intro_file, "wb").write(ssml_to_audio(t.load(jinja2.Environment(), "intro.ssml").render(news_date=news_date_parsed), format='LINEAR16'))
+
+    if not os.path.exists(goodbye_file):
+        open(goodbye_file, "wb").write(ssml_to_audio(t.load(jinja2.Environment(), "goodbye.ssml").render(), format='LINEAR16'))
+
     final = pydub.AudioSegment.empty()
 
-    final += pydub.AudioSegment.from_mp3('resources/intro.wav')
+    final += pydub.AudioSegment.from_mp3(intro_file)
     for item in items:
         final += pydub.AudioSegment.from_mp3('resources/Everythings_Nice_Sting.mp3')
         final += pydub.AudioSegment.from_wav(item)
 
-    final += pydub.AudioSegment.from_mp3('resources/goodbye.wav')
+    final += pydub.AudioSegment.from_mp3(goodbye_file)
 
     logging.info('saving %s' % podcast_fn)
     final.export(podcast_fn, format="mp3")
@@ -174,7 +184,7 @@ def generate_rss_feed():
     for f in reversed(sorted(glob.glob(os.path.join(PODCASTS_FOLDER, "bestofhn_*.mp3")))):
         podcast_date = datetime.datetime.strptime(os.path.basename(f)[9:19], "%Y-%m-%d")
         items.append({
-            'filename': os.path.basename(f),
+            'filename': f,
             'size': os.stat(f).st_size,
             'duration': int(pydub.AudioSegment.from_mp3(f).duration_seconds),
             'date': podcast_date.strftime("%c"),
@@ -191,12 +201,6 @@ if __name__ == '__main__':
     for d in [PODCASTS_FOLDER, NEWS_DATA_FOLDER, TEMP_FOLDER]:
         if not os.path.exists(d):
             os.mkdir(d)
-
-    # generate resources
-    if not os.path.exists("resources/intro.wav"):
-        open("resources/intro.wav", "wb").write(ssml_to_audio(t.load(jinja2.Environment(), "intro.ssml").render(), format='LINEAR16'))
-    if not os.path.exists("resources/goodbye.wav"):
-        open("resources/goodbye.wav", "wb").write(ssml_to_audio(t.load(jinja2.Environment(), "goodbye.ssml").render(), format='LINEAR16'))
 
     parser = argparse.ArgumentParser()
     parser.add_argument("-d", "--date", default=(datetime.date.today() - datetime.timedelta(days=1)).isoformat())
@@ -215,7 +219,7 @@ if __name__ == '__main__':
     fn = os.path.join(PODCASTS_FOLDER, "bestofhn_%s.mp3" % news_date)
 
     if not os.path.exists(fn):
-        generate_podcast(news_data, fn)
+        generate_podcast(news_data, news_date, fn)
 
     rss_feed = generate_rss_feed()
     print(rss_feed)
