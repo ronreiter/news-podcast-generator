@@ -18,11 +18,11 @@ You will also need to create a Google Storage bucket to store the podcasts and R
 
 3. Install a new virtualenv and run
 
-    pip install -r requirements.txt
+    `pip install -r requirements.txt`
 
 3. Run hn.py with the specific date (in ISO format) you'd like to create the podcast for. For example:
 
-    python hn.py --date=2019-07-26
+    `python hn.py --date=2019-07-26`
 
 If you do not specify a date, it will use yesterday's date to generate the podcast.
 
