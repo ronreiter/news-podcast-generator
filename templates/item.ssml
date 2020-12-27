@@ -1,5 +1,6 @@
 <speak>
-{{ title }}
+{{ title }}.<break time="0.5s"/>
+
 {% for sentence in sentences %}
 {{ sentence }}
 {% endfor %}

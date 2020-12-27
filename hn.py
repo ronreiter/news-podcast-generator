@@ -15,20 +15,17 @@ import logging
 
 logging.basicConfig(level=logging.INFO)
 
-from aylienapiclient import textapi
+#from aylienapiclient import textapi
+from aylien import summarize
 from google.cloud import storage
+from ibm_watson import TextToSpeechV1
+from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
 
 from config import *
 
-# TODO: use the google API client library instead of sending an HTTP request
-# https://developers.google.com/analytics/devguides/config/mgmt/v3/quickstart/service-py
-# from apiclient.discovery import build
-# from oauth2client.service_account import ServiceAccountCredentials
-# credentials = ServiceAccountCredentials.from_json_keyfile_name("creds.json", 'https://texttospeech.googleapis.com/v1beta1/text:synthesize')
-# service = build('texttospeech', 'v3', credentials)
-
 # constants
 TTS_URL = "https://texttospeech.googleapis.com/v1beta1/text:synthesize"
+TTS_URL_IBM = "https://gateway-wdc.watsonplatform.net/text-to-speech/api"
 BEST_STORIES_API = "https://hacker-news.firebaseio.com/v0/beststories.json"
 STORIES_FOR_DATE_PAGE = "https://news.ycombinator.com/front?day=%s"
 STORY_API = "https://hacker-news.firebaseio.com/v0/item/%s.json"
@@ -44,6 +41,10 @@ TEMP_FOLDER = "temp"
 
 storage_client = storage.Client.from_service_account_json(SERVICE_ACCOUNT_CREDS)
 t = jinja2.FileSystemLoader(TEMPLATE_FOLDER)
+authenticator = IAMAuthenticator(IBM_API_KEY)
+text_to_speech = TextToSpeechV1(authenticator=authenticator)
+text_to_speech.set_service_url(TTS_URL_IBM)
+
 
 def upload_blob(bucket_name, blob_name, data):
     bucket = storage_client.get_bucket(bucket_name)
@@ -60,8 +61,13 @@ def blob_exists(bucket_name, blob_name):
     blob = bucket.blob(blob_name)
     return blob.exists()
 
+def ssml_to_audio_google(ssml, format='audio/ogg;codecs=opus', voice_type=VOICE_TYPE, voice_gender=VOICE_GENDER, voice_lang=VOICE_LANG):
+    accept_to_format = {
+        'audio/ogg;codecs=opus': 'OGG_OPUS',
+        'audio/wav': 'LINEAR16',
+        'audio/mp3': 'MP3'
+    }
 
-def ssml_to_audio(ssml, format='OGG_OPUS', voice_type=VOICE_TYPE, voice_gender=VOICE_GENDER, voice_lang=VOICE_LANG):
     json_output = requests.post(TTS_URL, json.dumps({
         'input': {
             'ssml': ssml
@@ -72,7 +78,7 @@ def ssml_to_audio(ssml, format='OGG_OPUS', voice_type=VOICE_TYPE, voice_gender=V
             'ssmlGender': voice_gender
         },
         'audioConfig': {
-            'audioEncoding': format
+            'audioEncoding': accept_to_format[format]
         }
     }), headers={
         "X-Goog-Api-Key": GOOGLE_API_KEY,
@@ -86,6 +92,10 @@ def ssml_to_audio(ssml, format='OGG_OPUS', voice_type=VOICE_TYPE, voice_gender=V
 
     return raw_data
 
+def ssml_to_audio_ibm(ssml, format='audio/ogg;codecs=opus'):
+    return text_to_speech.synthesize(ssml, voice='en-US_LisaV3Voice', accept=format).get_result().content
+
+
 def get_best_hn_urls(num=10, news_date=None):
     if news_date:
         html_data = requests.get(STORIES_FOR_DATE_PAGE % news_date).content
@@ -96,8 +106,14 @@ def get_best_hn_urls(num=10, news_date=None):
 
     links = []
     for item in top_items[:num]:
-        logging.info('reading item %s', STORY_API % item)
-        item_data = requests.get(STORY_API % item).json()
+        cached = "story_cache/%s.json" % item
+        if not os.path.exists(cached):
+            logging.info('reading item %s', STORY_API % item)
+            item_data = requests.get(STORY_API % item).json()
+            open("story_cache/%s.json" % item, "w").write(json.dumps(item_data))
+        else:
+            item_data = json.load(open("story_cache/%s.json" % item))
+
         if 'url' in item_data:
             links.append(item_data['url'])
 
@@ -105,17 +121,15 @@ def get_best_hn_urls(num=10, news_date=None):
 
 
 def get_news_data(urls):
-    client = textapi.Client(AYLIEN_API_ID, AYLIEN_API_KEY)
-
     out = []
 
     for url in urls:
-        general_data = client.Extract({'url': url})
-        summary_data = client.Summarize({'url': url, 'sentences_number': TOTAL_SENTENCES})
-        if not general_data['title']:
+        general_data, summary_data = summarize(url)
+
+        if not "title" in general_data:
             continue
 
-        if not summary_data['sentences']:
+        if not "sentences" in summary_data:
             continue
 
         out.append({
@@ -146,7 +160,9 @@ def generate_podcast(news_items, news_date, podcast_fn):
         blob_name = os.path.join(TEMP_FOLDER, '%s.wav' % item_hash)
 
         if not os.path.exists(blob_name):
-            raw_data = ssml_to_audio(item_ssml, format='LINEAR16')
+            raw_data = ssml_to_audio_ibm(item_ssml, format='audio/wav')
+            # raw_data = ssml_to_audio(item_ssml, format='audio/wav')
+
             with open(blob_name, 'wb') as f:
                 f.write(raw_data)
 
@@ -158,10 +174,10 @@ def generate_podcast(news_items, news_date, podcast_fn):
     goodbye_file = os.path.join(TEMP_FOLDER, "goodbye.wav")
 
     if not os.path.exists(intro_file):
-        open(intro_file, "wb").write(ssml_to_audio(t.load(jinja2.Environment(), "intro.ssml").render(news_date=news_date_parsed), format='LINEAR16'))
+        open(intro_file, "wb").write(ssml_to_audio_google(t.load(jinja2.Environment(), "intro.ssml").render(news_date=news_date_parsed), format='audio/wav'))
 
     if not os.path.exists(goodbye_file):
-        open(goodbye_file, "wb").write(ssml_to_audio(t.load(jinja2.Environment(), "goodbye.ssml").render(), format='LINEAR16'))
+        open(goodbye_file, "wb").write(ssml_to_audio_google(t.load(jinja2.Environment(), "goodbye.ssml").render(), format='audio/wav'))
 
     final = pydub.AudioSegment.empty()
 
