@@ -1,0 +1,493 @@
+<html>
+<head>
+    <script src="https://unpkg.com/vue"></script>
+    <script src="https://unpkg.com/buefy/dist/buefy.min.js"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css">
+    <link rel="stylesheet" href="https://jenil.github.io/bulmaswatch/darkly/bulmaswatch.min.css">
+
+
+</head>
+
+<body>
+<div id="app">
+
+    <nav class="navbar is-fixed-top is-dark">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="https://bulma.io"><strong class="is-size-5"><span style="color: lightgreen">&lt;/&gt;</span>
+                TechNews</strong></a>
+
+            <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false"
+               data-target="navbarBasicExample">
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+            </a>
+        </div>
+
+        <div id="navbarBasicExample" class="navbar-menu">
+            <!--    <div class="navbar-start">-->
+            <!--      <a class="navbar-item">-->
+            <!--        Home-->
+            <!--      </a>-->
+
+            <!--      <a class="navbar-item">-->
+            <!--        Documentation-->
+            <!--      </a>-->
+
+            <!--      <div class="navbar-item has-dropdown is-hoverable">-->
+            <!--        <a class="navbar-link">-->
+            <!--          More-->
+            <!--        </a>-->
+
+            <!--        <div class="navbar-dropdown">-->
+            <!--          <a class="navbar-item">-->
+            <!--            About-->
+            <!--          </a>-->
+            <!--          <a class="navbar-item">-->
+            <!--            Jobs-->
+            <!--          </a>-->
+            <!--          <a class="navbar-item">-->
+            <!--            Contact-->
+            <!--          </a>-->
+            <!--          <hr class="navbar-divider">-->
+            <!--          <a class="navbar-item">-->
+            <!--            Report an issue-->
+            <!--          </a>-->
+            <!--        </div>-->
+            <!--      </div>-->
+            <!--    </div>-->
+
+            <!--            <div class="navbar-end">-->
+            <!--                <div class="navbar-item">-->
+            <!--                    <div class="buttons">-->
+            <!--                        <a class="button is-primary">-->
+            <!--                            <strong>Sign up</strong>-->
+            <!--                        </a>-->
+            <!--                        <a class="button is-light">-->
+            <!--                            Log in-->
+            <!--                        </a>-->
+            <!--                    </div>-->
+            <!--                </div>-->
+            <!--            </div>-->
+        </div>
+    </nav>
+
+    <div class="container" style="padding-top: 60px;">
+
+        <div style="width: 600px; margin: 30px auto" class="is-size-3">Tech News of the day - {{ (new
+            Date()).toLocaleDateString() }}
+        </div>
+        <div v-for="article in articles" class="box" style="width: 600px; margin: 30px auto">
+
+            <article class="media">
+                <div class="media-left">
+                    <figure class="image">
+                        <img :src="'http://free.pagepeeker.com/v2/thumbs.php?size=m&url=' + article.url"
+                             :alt="article.title">
+                        <div style="background-color: #343c3d; position: absolute; bottom: 0; left: 0; right: 0; height: 20px"></div>
+                    </figure>
+                </div>
+                <div class="media-content">
+                    <div class="content">
+                        <p class="is-size-5"><strong><a :href="article.url" target="_blank">{{ article.title
+                            }}</a></strong></p>
+                        <p>
+                            <strong v-if="article.author">@{{ article.author }}</strong><br/>
+                            <!--                            <small v-if="article.date.length">{{ timeSince(article.date) }} ago</small>-->
+
+                        </p>
+                    </div>
+<!--                    <nav class="level is-mobile">-->
+<!--                        <div class="level-left">-->
+<!--                            <a class="level-item" aria-label="reply">-->
+<!--                <span class="icon is-small">-->
+<!--                  <i class="fas fa-reply" aria-hidden="true"></i>-->
+<!--                </span>-->
+<!--                            </a>-->
+<!--                            <a class="level-item" aria-label="retweet">-->
+<!--                <span class="icon is-small">-->
+<!--                  <i class="fas fa-retweet" aria-hidden="true"></i>-->
+<!--                </span>-->
+<!--                            </a>-->
+<!--                            <a class="level-item" aria-label="like">-->
+<!--                <span class="icon is-small">-->
+<!--                  <i class="fas fa-heart" aria-hidden="true"></i>-->
+<!--                </span>-->
+<!--                            </a>-->
+<!--                        </div>-->
+<!--                    </nav>-->
+                </div>
+            </article>
+
+
+            <div v-for="sentence in article.sentences">
+                <div style="margin-top: 10px">{{ sentence }}</div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    let articles = [{
+        "title": "Photocatalyst that can Split Water into Hydrogen and oxygen at a Quantum Efficiency Close to 100%",
+        "author": "FuelCellsWorks",
+        "date": "2020-12-25T13:48:15+00:00",
+        "sentences": ["A research team led by Shinshu University\u2019s Tsuyoshi Takata, Takashi Hisatomi and Kazunari Domen succeeded in developing a photocatalyst that can split water into hydrogen and oxygen at a quantum efficiency close to 100%.", "Water splitting reaction driven by solar energy is a technology for producing renewable solar hydrogen\u00a0on a large scale.", "Therefore, it will make great strides toward large-scale solar hydrogen production if photocatalysts driving the sunlight-driven water splitting reaction with high efficiency are developed.", "To upgrade the solar energy conversion efficiency of photocatalytic water splitting, it is necessary to improve two factors: widening the wavelength range of light used by the photo\u00adcatalyst for the reaction and increasing the quantum yield at each wavelength.", "Title: Photocatalytic water splitting with a quantum efficiency of almost unity\n\n Authors\uff1aTsuyoshi Takata, Junzhe Jiang, Yoshihisa Sakata, Mamiko Nakabayashi, Naoya Shibata, Vikas Nandal, Kazuhiko Seki, Takashi Hisatomi, Kazunari Domen\n\n Journal\uff1aNature, 581, 411-414 (2020)\n\n DOI10.1038/s41586-020-2278-9"],
+        "url": "https://fuelcellsworks.com/news/photocatalyst-that-can-split-water-into-hydrogen-and-oxygen-at-a-quantum-efficiency-close-to-100/"
+    }, {
+        "title": "Ned Batchelder: Print this file, your printer will jam",
+        "author": "about",
+        "date": "",
+        "sentences": ["While working on the LPS-20 PostScript software, a bug was filed that said roughly,\n\nWe were no strangers to jammed printers, but a particular file that could jam the printer?", "Printed the bug report file again, the printer jammed, WTF!?", "The mystery in this case was solved by the hardware team, because while we software guys were working on the software that fed PostScript files to the printer, the hardware guys were still getting the kinks out of the printer itself.", "In the case of the bug report file, the page took longer than three seconds, but only slightly longer, so not only did the drum have to stop, but it hadn\u2019t quite totally stopped before it was started again.", "The file had pages that took just the right amount of time to hit a bad timing window in the drive train firmware, and the printer jammed every time."],
+        "url": "https://nedbatchelder.com/blog/200811/print_this_file_your_printer_will_jam.html"
+    }, {
+        "title": "1937 Film Perfectly Explains How a Car Differential Works",
+        "author": "Bob Sorokanich",
+        "date": "2015-06-01T20:56:00+00:00",
+        "sentences": ["But even if you understand implicitly how a car's differential works, it's kind of difficult to explain.", "This instructional is a classic production of the rambunctious former Olympic swimmer Henry Jamison \"Jam\" Handy \u2014who, having been expelled from the University of Michigan after writing a sensationalized article in the Chicago Tribune headlined \"Learn Sly Clupid's Tricks; Students at Ann Arbor Take Lessons in Love Making,\" could probably be described as the great-grandfather of clickbait.", "Handy, who never employed a desk at work and never had pockets in his suits as he found them \"a waste of time,\" went on to produce training and promotional films for soldiers, salespeople, factory workers, and most importantly, the auto industry.", "Anyway, here's how a car's differential works, in old-timey narration with stone-simple visual aids.", "If this video sends you deep down the rabbit hole of elegant, informative Jam Handy educational films , well, at least you learned something on your internet journey today."],
+        "url": "https://www.roadandtrack.com/car-culture/classic-cars/a25833/1937-film-perfectly-explains-how-a-car-differential-works/"
+    }, {
+        "title": "Fun with IP address parsing \u00b7 blog.dave.tf",
+        "author": "",
+        "date": "",
+        "sentences": ["So, allows you to elide 1 or more 16-bit blocks of zeros: means\n\nNext up, for cursed historical reasons, IPv6 permits you to write the final 32 bits of the address in dotted quad form.", "Effectively, you can splat an IPv4 address onto the end of IPv6 addresses!", "An IPv4 address is 4 bytes, so printing it as a single number is a bit human-unfriendly, but broadly plausible, right?", "And finally, we come to one last bit of unspecified behavior: do IPv4 addresses permit an unlimited number of leading zeros in each quad?", "At the dawn of IPv6, the idea was that you could upgrade an address to IPv6 by prepending a pair of colons, as in , but modern transition mechanisms no longer offer anything as clear-cut as this, so the notation doesn\u2019t really show up in the wild."],
+        "url": "https://blog.dave.tf/post/ip-addr-parsing/"
+    }, {
+        "title": "How I reverse-engineered Google Docs to play back any document's keystrokes \u00ab James Somers (jsomers.net)",
+        "author": "",
+        "date": "",
+        "sentences": ["This is possible because every document written in Google Docs since about May 2010 has a revision history that tracks every change, by every user, with timestamps accurate to the microsecond; these histories are available to anyone with \u201cEdit\u201d permissions; and I have written a piece of software that can find, decode, and rebuild the history for any given document.", "And to show you this one paragraph I liked, I didn\u2019t have to present you with the whole document (all 39,154 revisions of it) \u2014 I could extract bits and pieces that I thought were interesting, and interleave them in a blog post.", "I had this image I just couldn\u2019t shake: you\u2019d get someone whose writing is accessible, concise, uncontroversial, well-styled, and, above all, quintessentially writing: i.e., someone who\u2019s writing in a form where the writing is what there is, where the job isn\u2019t to report but rather to put into words what we would think if only we had their critical equipment and verbal range\u2026 someone like A.O. Scott, who reviews movies for the New York Times and does such a good job of it that sometimes I\u2019ll watch a movie just so I can read his review.", "So you get A.O. Scott to write in Google Docs, and you publish the full playback and excerpted bits and pieces of it, the greatest hits \u2014 annotated, of course, director\u2019s-commentary style \u2014 for every fan, every aspiring writer, and every high school English teacher in the country.", "Here\u2019s what the playback UI was like, and here\u2019s the JavaScript that made it possible (click on the highlighted bits of code for annotations):\n\nSimple as it is, this was actually better for my purposes than Etherpad."],
+        "url": "http://features.jsomers.net/how-i-reverse-engineered-google-docs/"
+    }, {
+        "title": "A Complete Guide to LLVM for Programming Language Creators",
+        "author": "Mukul Rathi",
+        "date": "",
+        "sentences": ["To cut through the boilerplate, to find out how to generate LLVM IR for a particular language expression, search for the method that takes in the corresponding object.", "e.g. for if-else statements:\n\nLLVM sits in the middle-end of our compiler, after we\u2019ve desugared our language features, but before the backends that target specific machine architectures (x86, ARM etc.)\n\nLLVM\u2019s IR is pretty low-level, it can\u2019t contain language features present in some languages but not others (e.g. classes are present in C++ but not C).", "Let\u2019s look at a simple factorial function in our language Bolt:\n\nThe corresponding LLVM IR is as follows:\n\nWe can walk through this IR in 4 levels of detail:\n\nNotice how LLVM IR contains assembly instructions like and , but abstracts the machine-specific messy details of function calling conventions with a single instruction.", "Taking another step back, the overall structure of a function in LLVM IR is as follows:\n\nAn LLVM module contains all the information associated with a program file.", "The function\u2019s signature is a hangover from C (we return 0 to indicate successful execution):\n\nWe specify that we want to compile for an Intel Macbook Pro in the module target info:\n\nNow we\u2019ve got the basics of LLVM IR down, let\u2019s introduce the LLVM API."],
+        "url": "https://mukulrathi.co.uk/create-your-own-programming-language/llvm-ir-cpp-api-tutorial/"
+    }, {
+        "title": "AT&T outage: Internet, 911 disrupted, planes grounded after Nashville explosion. Get the latest updates",
+        "author": "Mariah Timms",
+        "date": "2020-12-25T18:17:26+00:00",
+        "sentences": ["CLOSE\n\n\n\n\n\n\n\nAutoplay\nShow Thumbnails\nShow Captions\n\nLast SlideNext Slide\n\n\nWidespread 911 issues in the Nashville area were reported after ATT wireless and internet service were disrupted on Friday hours following a massive explosion downtown.", "LATEST NEWS: Click here for updates on ATT internet, phones, 911 after Nashville bombing\n911 access, flights grounded\nA handful of local police departments reported the outage was disrupting 911 access, including some non-emergency lines, in their jurisdictions.", "An ATT spokesman confirmed the outage was linked to the explosion:\nAn ATT outage was reported in Nashville and Middle Tennessee hours after an explosion took place near an ATT facility.", "(Photo: DownDetector.com)\n\n\"Service for some customers in Nashville and the surrounding areas may be affected by damage to our facilities from the explosion this morning.", "Comcast hot spots available free\nComcast reminded\u00a0Nashville residents Friday that the public\u00a0Xfinity WiFi hotspots throughout the potentially impacted areas are available for anyone to use, including non-Xfinity customers, free of charge."],
+        "url": "https://www.tennessean.com/story/news/local/2020/12/25/att-outage-internet-down-hours-after-nashville-explosion/4045278001/"
+    }, {
+        "title": "For the first time in more than 80 years, salmon spawning in the upper Columbia River",
+        "author": "Eli Francovich",
+        "date": "2020-12-17T06:00:00+00:00",
+        "sentences": ["Colville Tribal biologists counted 36 redds (a gravely nest in which female salmon lay their eggs) along an 8-mile stretch of the Sanpoil River, a tributary of the Columbia, in September.", "Since the Chief Joseph and Grand Coulee dams were built in the 1950s and 1930s, respectively, salmon have been blocked from returning to spawning beds in the upper Columbia River.", "Since 2014, the Columbia River tribes have worked on a plan that examines habitat, fish passage and survival among other things.", "The fact they did spawn is an affirmation of research done by the Spokane Tribe showing that, despite the dams, the river contains hundreds of miles of spawning and rearing habitat suitable for steelhead and spring chinook production.", "Washington rivers, including the Columbia, seethed with salmon and Native people planned their years around the fish migration."],
+        "url": "https://www.spokesman.com/stories/2020/dec/17/for-the-first-time-in-more-than-80-years-salmon-sp/"
+    }, {
+        "title": "dpapathanasiou/simple-graph",
+        "author": "dpapathanasiou",
+        "date": "",
+        "sentences": ["This is a simple graph database in SQLite, inspired by \"SQLite as a document database\".", "The schema consists of just two structures:\n\nThe python database script provides convenience functions for atomic transactions to add, delete, connect, and search for nodes.", "Any single node or path of nodes can also be depicted graphically by using the function within the database script to generate dot files, which in turn can be converted to images with Graphviz.", "The resulting database will be saved to a SQLite file named :\n\nThe nodes can be searched by their ids or any other combination of attributes (either as strict equality, or using in combination with or ):\n\nPaths through the graph can be discovered with a starting node id, and an optional ending id; the default neighbor expansion is nodes connected nodes in either direction, but that can changed by specifying either or instead:\n\nAny path or list of nodes can rendered graphically by using the function.", "This command produces dot files, which in turn can be converted to images with Graphviz:\n\nThe resuling file can produce a png image, using this command line instruction:\n\nThe default options include every key/value pair (excluding the id) in the node and edge objects:\n\nThere are display options to help refine what is produced:\n\nThe resulting dot file can be edited further as needed; the dot guide has more options and examples."],
+        "url": "https://github.com/dpapathanasiou/simple-graph"
+    }, {
+        "title": "Executable PNGs - djhworld",
+        "author": "",
+        "date": "2020-12-26T00:00:00+00:00",
+        "sentences": ["I\u2019m not entirely sure what PICO-8 is actually doing, but at a guess it\u2019s probably use Steganography techniques to \u2018hide\u2019 the data within the raw bytes of the image.", "There are a lot of resources out there that explain how Steganography works, but the crux of it is quite simple, your image your want to hide data into is made up of bytes, an image is made up of pixels.", "To hide your data (the \u201cpayload\u201d) you essentially \u201cmix\u201d the bytes from your payload with the bytes from the image.", "If you just replaced each byte in your cover image with the bytes from your payload, you would end up with sections of the image looking distorted as the colours probably wouldn\u2019t match with what your original image was.", "A lot of binaries are quite large, and given the constraints of needing to fit them into an image, sometimes these need to be big, meaning you end up with comically large files."],
+        "url": "https://djharper.dev/post/2020/12/26/executable-pngs/"
+    }, {
+        "title": "How much math you need for programming",
+        "author": "Name (Required)",
+        "date": "2014-12-05T05:17:34+00:00",
+        "sentences": ["I was not good at Math, so I was trying to solve the problems I was facing everyday as a programmer using my intuition, common-sense, flow-charts and more other kinds of diagrams.", "I was creating a model, to which you will feed a problem as input and it will produce a solution as output using English language, flow charts and lot of other kinds of diagrams I created.", "With Math you can solve problems in a much shorter and better way than not using it.", "Coming back to the primary question of whether we need Math for becoming a great programmer, this is how tho world solved its problems in beginning:\n\nThen came Math and this is what most mathematicians did:\n\nAnd this what almost all  do:\n\nEvan Miller says you can become first rate hacker without using a lot of Math and I think he is right and that is in agreement with all other authors.", "As programmers, we solve problems, but if we solve problems using Math and then apply programming solutions to the mathematical model of the solution, then we can have some amazing ways of providing better solutions that will make our lives easier as a programmer (kind of side-effect):"],
+        "url": "https://lispmachine.wordpress.com/2014/12/05/how-much-math-you-need-for-programming/"
+    }, {
+        "title": "Give your Mac (imaginary) unlimited storage thanks to Disk Utility\u2019s bug",
+        "author": "",
+        "date": "2020-12-26T08:00:00+00:00",
+        "sentences": ["Thanks to Disk Utility in Big Sur, I can now reveal how you can get many terabytes of APFS containers on a single 1 TB disk.", "Connect your empty external disk, and check that it has a single container with one APFS volume inside it.", "You should see something as nonsensical as this: my external 1 TB disk has become, with a little more erasing, 3.5 TB divided into two containers.", "You can add more containers here, and erase the disk again, preferably using the same name, until your external disk has as much imaginary storage space as you require.", "And that\u2019s your workaround in the event that you stumble into this bug when trying to do something more serious: whenever you manipulate disks or containers in Disk Utility, eject the disk\u2019s contents, disconnect it from your Mac, quit Disk Utility, then reconnect and the disk should be less nonsensical."],
+        "url": "https://eclecticlight.co/2020/12/26/give-your-mac-imaginary-unlimited-storage-thanks-to-disk-utilitys-bug/"
+    }, {
+        "title": "Christmas Is Bird-Counting Season For 60,000 Americans",
+        "author": "Ella Koeze",
+        "date": "2016-12-21T12:16:17+00:00",
+        "sentences": ["COMMON NAME\n\nCOUNT\n\nRed-winged blackbird\n8.9m\n\n\u2013\n\n\n\nSnow goose\n4.2\n\n\u2013\n\n\n\nEuropean starling\n3.4\n\n\u2013\n\n\n\nCommon grackle\n2.4\n\n\u2013\n\n\n\nCanada goose\n2.2\n\n\u2013\n\n\n\nBrown-headed  robin\n1.1\n\n\u2013\n\n\n\nAmerican crow\n1.0\n\n\u2013\n\n\n\nRing-billed gull\n1.0\n\n\u2013\n\n\n\nLaysan albatross\n0.9\n\n\u2013\n\n\n\nAmerican coot\n0.7\n\n\u2013\n\n\n\nHouse sparrow\n0.5\n\n\u2013\n\n\n\nRock pigeon (feral pigeon)\n0.5\n\n\u2013\n\n\n\nLesser scaup\n0.4\n\n\u2013\n\n\n\nMost abundant U.S. birds in the 2015-16 Christmas Bird Count\nBut a count is not the same thing as a population estimate.", "Red-winged blackbirds are one of the most populous birds in the U.S. (bird populations are difficult to determine; an estimate by Partners in Flight, a network of organizations interested in bird conservation, puts the red-winged blackbird population at 99 million in the U.S.) But they are not as dominant as their No. 1 ranking in the Christmas Bird Count suggests.", "The red-winged blackbird, however, has some advantages when it comes to showing up in the Christmas Bird Count: Their range covers the whole of the continental U.S., and they often flock by the thousands.", "COMMON NAME\nNUMBER OF TIMES IN TOP 15\n\nAmerican coot\n10\n\nAmerican crow\n10\n\nAmerican robin\n10\n\nCanada goose\n10\n\nCommon grackle\n10\n\nEuropean  blackbird\n10\n\nRing-billed gull\n10\n\nSnow goose\n10\n\nBrown-headed cowbird\n9\n\nRock pigeon (feral pigeon)\n9\n\nLaysan albatross\n7\n\nNorthern pintail\n7\n\nHouse sparrow\n5\n\nTree swallow\n4\n\nLesser scaup\n3\n\nBrewer\u2019s blackbird\n2\n\nMourning dove\n2\n\nGreat-tailed grackle\n1\n\nLong-tailed duck\n1\n\nNumber of times a bird has been in the top 15 most-sighted in the past 10 Christmas Bird Counts in the U.S.", "Kathy Dale, who is the director of science technology for the National Audubon Society and helps manage the Christmas Bird Count database, said it was the first bird-related citizen science project of its kind in the U.S. Although a given year\u2019s count can be affected by factors like weather and participation, the long-running nature of the count allows researchers to observe trends in the ranges and abundance of birds over time."],
+        "url": "https://fivethirtyeight.com/features/christmas-is-bird-counting-season-for-60000-americans/"
+    }, {
+        "title": "davidhampgonsalves/life-dashboard",
+        "author": "davidhampgonsalves",
+        "date": "",
+        "sentences": ["Low power, heads up display for every day life running on a Kindle.", "The project uses a serverless backend to collate data from external services and on the Kindle itself Rust code (cross compiled via docker) fetches and typesets the data into an image.", "The mobileread forumn is the place for mobile reader hacking.", "My Kindle (KT 4) does not provide access to the RTC, but if I ever find a Kindle Paper White I would be able to sleep the device and run it unplugged for months between changes.", "I could have avoided the backend of this project and only used the Kindle but I had already created it for another project and saved time to reuse it."],
+        "url": "https://github.com/davidhampgonsalves/life-dashboard"
+    }, {
+        "title": "Dev-C++ Is A Low Memory Windows Native C++ IDE Built In Delphi",
+        "author": "Embarcadero Admin",
+        "date": "2020-10-18T13:48:16+00:00",
+        "sentences": ["Embarcadero Dev-C++ is a new and improved fork (sponsored by Embarcadero) of Bloodshed Dev-C++ and Orwell Dev-C++.", "Embarcadero Dev-C++ can also be used in combination with Cygwin or any other GCC based compiler.", "Embarcadero Dev-C++ is built using the latest version of Embarcadero Delphi.", "Embarcadero Dev-C++ has a low memory footprint because it is a native Windows application and does not use Electron.", "It uses the built in Windows 10, Windows 10 Slate Gray, and Windows 10 Blue Whale Delphi styles."],
+        "url": "https://blogs.embarcadero.com/dev-c-is-a-low-memory-windows-native-c-ide-built-in-delphi/"
+    }, {
+        "title": "codespaces-contrib/codeswing",
+        "author": "codespaces-contrib",
+        "date": "",
+        "sentences": ["After you install the CodeSwing extension, you can create new swings at any time, using the following commands:\n\nAfter creating a swing, your editor layout will be automatically setup to accomodate the needs of the selected template.", "If you accidentally close the CodeSwing preview, then you can re-open it by either reloading VS Code, or running the \"CodeSwing: Open Workspace Swing\" command.", "By default, swing's assume you're using \"standard\" JavaScript code ( ), and allows you to add 3rd-party libraries, which are added via new elements in the preview page.", "When you create a new swing, you'll see a list of templates, which let you create swings using a pre-defined set of files and external libraries (e.g. React.js, Vue).", "To see an example of how to define a template gallery, see the built-in gallery\n\nWhen defining the template, you can use the file to indicate not only the JavaScript and CSS libraries that the playgroud needs, but also, the layout it should use by default, and whether or not the console should be automatically opened (e.g. because the swing relies on writing console logs)."],
+        "url": "https://github.com/codespaces-contrib/codeswing"
+    }, {
+        "title": "Learning to Play the Chaos Game - Comfortably Numbered",
+        "author": "",
+        "date": "",
+        "sentences": ["If we could easily compute images of IFS fixed points from a set of matrices, then perhaps we could try to optimize the parameters of these matrices to make the fixed point look the way we want it to.", "The challenge, of course, is efficiently finding the fixed point \u2014 repeatedly rasterizing and compositing affine transformations on images sounds expensive \u2014 and doing so differentiably sounds like a scalability nightmare!", "So here is the plan: we start with a point, and play the chaos game with our current IFS matrices to obtain a point cloud that stochastically approximates the fixed-point.", "Now we can export the four affine matrices out from PyTorch and work out the \u201ctrue\u201d fixed point with a more expensive offline computation (for example, by simulating a few million steps of the chaos game).", "Do point clouds have an inherent IFS \u201cdimensionality\u201d (in terms of, say, the number of affine transformations you need to get a good approximation)?"],
+        "url": "https://hardmath123.github.io/chaos-game-fractal-foliage.html"
+    }, {
+        "title": "Undocumented user account in Zyxel products (CVE-2020-29583)",
+        "author": "EYE",
+        "date": "",
+        "sentences": ["TL;DR: If you have a Zyxel USG, ATP, VPN, ZyWALL or USG FLEX you should update to the latest firmware version today.", "When doing some research (rooting) on my Zyxel USG40, I was surprised to find a user account 'zyfwp' with a password hash in the latest firmware version (4.60 patch 0).", "As SSL VPN on these devices operates on the same port as the web interface, a lot of users have exposed port 443 of these devices to the internet.", "Zyxel devices do not expose their firmware version to unauthenticated users, so determining if a device is vulnerable is a bit more difficult.", "2020-12-02: Zyxel requests more information about how the vulnerability was discovered\n\n2020-12-08: Zyxel releases beta firmware 4.60-WK48 and removes the vulnerable firmware version from their site"],
+        "url": "https://www.eyecontrol.nl/blog/undocumented-user-account-in-zyxel-products.html"
+    }, {
+        "title": "Why on Earth Is Someone Stealing Unpublished Book Manuscripts?",
+        "author": "By",
+        "date": "2020-12-21T21:20:30+00:00",
+        "sentences": ["Cynthia D\u2019Aprix Sweeney, the author of the debut novel \u201cThe Nest,\u201d was targeted in 2018 by someone pretending to be her agent, Henry Dunow.", "The emails began about eight months after she had sold her second novel based on a sample of the manuscript called a \u201cpartial.\u201d", "Ms. Sweeney\u2019s second book, however, hadn\u2019t yet been announced anywhere, but the phisher knew about it in detail, down to Ms. Sweeney\u2019s deadline and the names of the novel\u2019s  main characters.", "Ms. Sweeney\u2019s first book was a best seller, so she, like well-known authors Jo Nesbo and Michael J. Fox, may be an obvious choice.", "But the scammer has also requested experimental novels, short story collections and recently sold books by first-time authors."],
+        "url": "https://www.nytimes.com/2020/12/21/books/publishing-manuscripts-phishing-scam.html"
+    }, {
+        "title": "Kit FUI - User interfaces from movies, tv, video games and more",
+        "author": "",
+        "date": "",
+        "sentences": [],
+        "url": "https://www.saji8k.com/kit-fui/"
+    }, {
+        "title": "The new changelog.com setup for 2020",
+        "author": "",
+        "date": "",
+        "sentences": ["At the time, changelog.com was running on Docker Swarm, everything was managed by Terraform, and the end-result was simpler & better because:\n\nThis year, we simplified and improved the changelog.com setup further by replacing Docker Swarm and Terraform with Linode Kubernetes Engine (LKE).", "In our Linode Kubernetes Engine setup, cert-manager is responsible for managing certificates for all our domains, and a job keeps them synchronised in Fastly.", "If we need to check on the state of all our certificates, we can do it from the same pane of glass mentioned earlier:\n\nA single Linode CLI command gets us a managed Kubernetes cluster, and a few commands later we have changelog.com and all its dependent services up and running, including DNS, TLS & CDN integration.", "Yes, we need to install additional components such as ingress-nginx, cert-manager, postgres-operator and a few others, but once we do this, we get to use higher-level resources such as PostgreSQL clusters, Let\u2019s Encrypt certificates and ingresses that handle load balancer provisioning.", "If you spend time exploring past commits, you will even find links to public discussions with our technology partners that lead to specific improvements in Linode Kubernetes Engine (LKE), as well as other related areas such as kube-prometheus & fastly-cli."],
+        "url": "https://changelog.com/posts/the-new-changelog-setup-for-2020"
+    }, {
+        "title": "vsedach/Vacietis",
+        "author": "vsedach",
+        "date": "",
+        "sentences": ["Type\n\n        Name\n\n        Latest commit message\n\n        Commit time\n\n      \n\n\n        \n        \n        \n        \n        \n        \n        \n        \n        \n        \n        \n        \n    \n\n    \n  \n\n\n\n\n\n\n\n\n  \n    \n      \n        Vacietis is a C compiler for Common Lisp systems.", "Vacietis works by loading C code into a Common Lisp runtime as though\nit were Lisp code, where it can then be compiled or evaled.", "* INSTALLING:\n  ----------\n\nYou can obtain Vacietis from github:\ngit clone  Vacietis dependencies are available via  If you put Vacietis in\nquicklisp/local-projects/ you can just load it with\n(ql:quickload \"vacietis\")\n\n\n* USAGE:\n  -----\n\nC code can be read in the same way as regular Lisp code by using\nreadtables:\n\n(let ((*readtable*               vacietis:c-readtable)\n      (vacietis:*compiler-state*   (read some stream))\n\nThe Vacietis reader keeps track of type and preprocessor\nmacro declarations in a compiler state object bound by\n*compiler-state*.", "The basic idea for the Vacietis runtime and memory model comes from\nScott L. Burson's Zeta-C compiler for Lisp  technique for representing pointers to arbitrary C lvalues as\nclosures was first demonstrated by Oleg  idea for a combined single-pass  from Fabrice Bellard's TCC: http://bellard.org/tcc/\n\n\n* OBTAINING CODE AND HELP:\n  -----------------------\n\nThe official Vacietis repository is  is a Vacietis mailing list on the  reports can be sent to the mailing  github issue  directly to the author:\nvsedach@gmail.com\n\n\n* UNIT TESTS:\n  ----------\n\n(ql:quickload  Vacietis test suite includes a variety of code that tests the\ncompiler and libc.", "Portions of the Vacietis libc may be derived from Zeta-C (released\ninto the public domain by its author, Scott L. Burson) and Erik\nAndersen's andersen@codepoet.org LGPL-licensed       \n\n  \n\n\n\n\n\n    \n            \n\n      \n        \n          \n            About\n\n\n    \n      C to Common Lisp compiler\n    \n\n\n\n  Resources\n\n  \n\n  License\n\n  \n\n          \n\n        \n\n          \n          \n          \n      \n\n\n\n\n\n\n  \n\n\n\n\n    \n  \n\n\n  \n\n\n          \n\n\n\n\n  \n    \n    \n      \n    \n    You can\u2019t perform that action at this time."],
+        "url": "https://github.com/vsedach/Vacietis"
+    }, {
+        "title": "Getting rid of NPM scripts",
+        "author": "Eric Fortis",
+        "date": "",
+        "sentences": ["In 2016, Sam Saccone discovered a vulnerability that allows adversaries to run arbitrary scripts when installing an NPM package of theirs.", "As mitigation, NPM co-founder Laurie Voss suggests:\n\nUI Drafter uses the latter because it avoids having to remember the flag everytime.", "But that option disables NPM .", "Therefore, we end up with two alternatives:\n\nWhich can be ran as:\n\nIf the package is not globally installed, prefix the path.", "For example:\n\nIf you need to install packages that install binary dependencies, or rely on running an NPM script, override the :\n\nEDIT: (Dec/27/2020) As suggested in the Hacker News thread:"],
+        "url": "https://blog.uidrafter.com/engineering/getting-rid-of-npm-scripts"
+    }, {
+        "title": "Climbing Steep hills, or adopting Ruby 3 types with RBS \u2014",
+        "author": "Vladimir Dementyev",
+        "date": "",
+        "sentences": ["The\u00a0official Readme states that:\n\nThe \u201cstructure\u201d includes class and\u00a0method signatures, type definitions, etc.", "The signature looks pretty similar to\u00a0the\u00a0class definition itself, except that we have types specified for arguments, methods, and\u00a0instance variables.", "It spies on\u00a0all the\u00a0loaded classes and\u00a0methods and\u00a0collects the\u00a0information about which types have been used as inputs and\u00a0outputs, analyzes this data, and\u00a0produces RBS definitions.", "So, I decided to\u00a0hack the\u00a0system and\u00a0explicitly define the\u00a0 signature for the\u00a0Processor class:\n\nThat way, my code stays the\u00a0same; only the\u00a0types suffer \ud83d\ude08.", "For example, we use to\u00a0dynamically generate transformation methods:\n\nAnd here\u2019s the\u00a0error we see when running :\n\nHmm, looks like our type checker doesn\u2019t know that we\u2019re calling the\u00a0 method in\u00a0the\u00a0context of\u00a0the\u00a0Processor class (we call )."],
+        "url": "https://evilmartians.com/chronicles/climbing-steep-hills-or-adopting-ruby-types"
+    }, {
+        "title": "Apple - Support - System Status",
+        "author": "",
+        "date": "",
+        "sentences": [],
+        "url": "https://www.apple.com/support/systemstatus?down"
+    }, {
+        "title": "Making a digital clock in Google Sheets | Robin Lord",
+        "author": "Robin",
+        "date": "2020-10-25T13:27:58+00:00",
+        "sentences": ["If we used minute() on the timestamp above we\u2019d get 24\n\n=regexextract() lets us get part of the value out of a cell, but only as long as it\u2019s used on text (digits can be interpreted as either numbers or text in Sheets).", "The regex in C4 is ^(2|3|4|5|6|8|9|0)$ so if the first digit of the hour is 2 \u2013 C4 will be highlighted and C3 won\u2019t be.", "Our Clock C3 cell in our is a combination of the numbers in our digits sheet A3, G3, M3, S3, Y3, AE3, AK3, AQ3, AW3, BC3.", "Our first conditional formatting formula checked each cell in the green block against the first digit of the current hour.", "Our second formula checks the cells in the yellow block against the second digit of the hour, our third block checks the cells in the blue block against the first digit of the minute etc. etc."],
+        "url": "https://www.therobinlord.com/making-a-digital-clock-in-google-sheets/"
+    }, {
+        "title": "A pain reliever that alters perceptions of risk",
+        "author": "",
+        "date": "",
+        "sentences": ["People who took acetaminophen rated activities like \u201cbungee jumping off a tall bridge\u201d and \u201cspeaking your mind about an unpopular issue in a meeting at work\u201d as less risky than people who took a placebo, researchers found.", "\u201cAcetaminophen seems to make people feel less negative emotion when they consider risky activities \u2013 they just don\u2019t feel as scared,\u201d said Baldwin Way, co-author of the study and associate professor of psychology at The Ohio State University.", "The study extends a series of studies led by Way that have shown acetaminophen \u2013 the main ingredient in the pain-reliever Tylenol and nearly 600 other medicines \u2013 has psychological effects that most people don\u2019t consider when they take it.", "Results showed that those under the influence of acetaminophen rated activities like bungee jumping, walking home alone at night in an unsafe area of town, starting a new career in your mid-30s, and taking a skydiving class as less risky than those who took the placebo.", "\u201cPerhaps someone with mild COVID-19 symptoms may not think it is as risky to leave their house and meet with people if they\u2019re taking acetaminophen,\u201d Way said."],
+        "url": "https://news.osu.edu/a-pain-reliever-that-alters-perceptions-of-risk"
+    }, {
+        "title": "Volmarg/personal-management-system",
+        "author": "Volmarg",
+        "date": "",
+        "sentences": ["I decided to create my own system, because playing around with tons of plugins for WordPress and writing customizations to some existing CRMs would take me as much time as writing my own system and by knowing the logic from its core it's easier for me to write extensions and add additional modules - whatever I need.", "You can use todolist to keep track of your goals progress or use payments submodule to keep an eye of the money amount that you want to collect for something.", "With this simple module you can organize your personal contacts.", "Schedules - This module purpose is to keep track of any recurring things you got to do like for example car oil changes, payments, visits etc.", "Bills submodule allows saving information about money spent on certain things (separately from monthly payments for things like money spent on holiday etc.) \n\n Shopping - You got plans to buy something in future?"],
+        "url": "https://github.com/Volmarg/personal-management-system"
+    }]
+
+    let articles2 = [
+ {
+  "date": "2020-12-27T20:12:11Z",
+  "img": "https://cdn57.androidauthority.net/wp-content/uploads/2020/12/ps5-vs-xbox-series-x-wireless-controller-920x470.jpeg",
+  "title": "Team AA: Our favorite video games of 2020 on console, PC, and mobile - Android Authority",
+  "content": " We have a large number of gamers on staff here at Android Authority, and this year has been an interesting one for games. It not only saw the release of the long-awaited PlayStation 5 and Xbox Series X and Xbox Series S consoles, but it also left us with a bit more time at home to enjoy them (for better or for worse).\nTo round off the year, weve put together a list of our favorite video games released (or re-released) in 2020 on any and all platforms. They run the gamut of free-to-play mobile games to console-exclusives to remakes of [...]",
+  "source_url": "https://news.google.com/__i/rss/rd/articles/CBMiOWh0dHBzOi8vd3d3LmFuZHJvaWRhdXRob3JpdHkuY29tL2Jlc3QtZ2FtZXMtMjAyMC0xMTg3MjA0L9IBPWh0dHBzOi8vd3d3LmFuZHJvaWRhdXRob3JpdHkuY29tL2Jlc3QtZ2FtZXMtMjAyMC0xMTg3MjA0L2FtcC8?oc=5",
+  "source_name": "Android Authority",
+  "category": "Technology",
+  "keywords": "Team AA; PC; Android Authority We; Android Authority; PlayStation; Xbox Series; Genshin Impact; Breath of the Wild; Tristan Rayners; Animal Crossing; New Horizons; Nintendo Switch; Amazon We; Resident Evil; Scott Brown; Paper Mario; Origami King; Last of Us; Part II; Doom Eternal; Hyrule Warriors; Age of Calamity; Im; Amazon Hadlee Simons; Project Wingman; Aussie; Kickstarter; Ace Combat; Halo; Master Chief Collection; Steam Our; Joe Hindy; Final Fantasy VII Remake; Joe; Amazon Hades; Sound Guys; Sam Moore; Supergiant Games; Sam; Steam The Persona; Japanese RPGs; Oliver Cragg; Atlus; RPGs; Phantom Thieves; Joker; Tokyo; Amazon; Jonathan Feist; Play Store; Seven Deadly Sins; Beeg Whales; Download; Grand Cross News; Jimmy Westenberg; Tony Hawks Pro Skater; Xbox One; Jimmy; Tony Hawk"
+ },
+ {
+  "date": "2020-12-27T17:01:18Z",
+  "img": "https://wp-assets.futurism.com/2020/01/lifelock-1200x629.jpg",
+  "title": "Identity Theft Only Takes a Minute. Luckily, So Does Protecting Against It.",
+  "content": " As you might expect, people are Christmas shopping online in record levels in 2020. Although various e-commerce companies are trying to create a safer environment, . One in four Americans have fallen victim to identity theft or credit card fraud while holiday shopping, with 35-percent falling victim online. And that number is sure to rise. However, LifeLock by Norton is a service that can help to keep your information safe . With 15-years of experience in identity theft protection, it\u2019s guaranteed to help reduce your risk of becoming a victim.\nLifeLock\nIdentity theft comes in various forms. After acquiring your personal information, [...]",
+  "source_url": "https://futurism.com/identity-theft-protection-life-lock",
+  "source_name": "futurism.com",
+  "category": "Technology",
+  "keywords": "Identity Theft Only Takes; So Does Protecting Against It; Christmas; LifeLock; Norton; LifeLock Identity; Identity Theft Resource Center; VPN; WiFi; Android; Ultimate Plus; Standard Plan; Ultimate Plus Plan; USPS; Futurism"
+ },
+ {
+  "date": "2020-12-28T01:30:12Z",
+  "img": "https://www.talkesport.com/wp-content/uploads/Forsen-banned-from-twitch.jpg",
+  "title": "Forsen Unbanned On Twitch After One Month Suspension, Announces Return Stream - TalkEsport",
+  "content": " Sebastian \u2018Forsen\u2019 Fors\u00a0is set to make his return on Twitch after he was banned in November over an inappropriate GIF.\nForsen\u2019s ban sparked a bit of controversy as he was unaware of the content while broadcasting it on stream which makes it a total unintentional violation of the community guidelines. For a mistake this unintentional, he was handed a harsh ban however it was lifted right after Christmas. They are many instances where streamers have accidentally shown inappropriate content but Twitch let them pass.\nSo apparently I\u2019m unbanned! I\u2019ll cu guys tomorrow at 7pm cet. Thats all.\nThe community outrage against the Forsen [...]",
+  "source_url": "https://news.google.com/__i/rss/rd/articles/CBMiNGh0dHBzOi8vd3d3LnRhbGtlc3BvcnQuY29tL25ld3MvdHdpdGNoLXVuYmFuLWZvcnNlbi_SAQA?oc=5",
+  "source_name": "TalkEsport",
+  "category": "Technology",
+  "keywords": "Forsen Unbanned On Twitch After One Month Suspension; Announces Return Stream; TalkEsport Sebastian; Forsen; Twitch; GIF; Christmas; Among Us; Fall Guys; Cyberpunk"
+ },
+ {
+  "date": "2020-12-27T23:03:14Z",
+  "img": "https://i.cbc.ca/1.5853046.1608741065!/fileImage/httpImage/image.jpg_gen/derivatives/16x9_620/gary-peddle-and-mitch-ghaney.jpg",
+  "title": "What two brothers taught me about drug addiction. And why I need to apologize. - CBC.ca",
+  "content": " Appearances can be deceiving. Anthony Germain learned that lesson \u2014 and quite a lot more \u2014 from Mitch and Gary, two brothers whose tale involves addiction, love and a call for change.\nIt s not unusual for any journalist who pushes stories and topics with a degree of zeal to apologize from time to time for mistakes that get on the air.\nBut I need to say I m sorry to two brothers named Mitch and Gary for something that happened off the air.\nYou see, Mitch is a cool, slender dude with long hair (probably the hairiest man I have ever interviewed) [...]",
+  "source_url": "https://news.google.com/__i/rss/rd/articles/CBMiW2h0dHBzOi8vd3d3LmNiYy5jYS9uZXdzL2NhbmFkYS9uZXdmb3VuZGxhbmQtbGFicmFkb3IvZ2VybWFpbi1wb2ludG9mdmlldy1icm90aGVycy0xLjU4NTI5MDjSASBodHRwczovL3d3dy5jYmMuY2EvYW1wLzEuNTg1MjkwOA?oc=5",
+  "source_name": "CBC.ca",
+  "category": "Technology",
+  "keywords": "Anthony Germain; Mitch; Gary; And Gary; St; John; Mitch Ghaney; Newfoundland; Labrador; Gary Peddle"
+ },
+ {
+  "date": "2020-12-27T19:31:12Z",
+  "img": "https://techcrunch.com/wp-content/uploads/2019/01/GettyImages-911746532.jpg?w=600",
+  "title": "What startups can learn from this dumpster fire year",
+  "content": " Even with a distracting bull market, I wanted to reflect and see how the youngest startups are faring. Alex Wilhem and I dove into data, provided by Pitchbook, to see if the next DoorDashes and Airbnbs are getting their first financings.\nThe answer is that . COVID-19 shook up which startups were considered attractive by private investors. And that changeup came at risk to certain sectors and people.\nHere\u2019s how two investors explained the dynamics :\nI think seed prices are being driven up by the larger [venture] firms playing earlier and feeling like they cannot afford to miss the next DoorDash. I [...]",
+  "source_url": "http://feedproxy.google.com/~r/Techcrunch/~3/HTJUrTZmLwk/",
+  "source_name": "TechCrunch",
+  "category": "Technology",
+  "keywords": "Alex Wilhem; Airbnbs; COVID; DoorDash; New Year; Bryce Durbin; TechCrunch Funding; TC Sessions; Chris Boshuizen of; Planet Labs; Image of Uncle Sam; Space Force"
+ },
+ {
+  "date": "2020-12-27T20:12:12Z",
+  "img": "https://static3.gamerantimages.com/wordpress/wp-content/uploads/2020/12/Story-heavy-games-like-Cyberpunk-2077.jpg",
+  "title": "10 Story-Heavy Games To Play If You Loved Cyberpunk 2077 - GameRant",
+  "content": " It goes without saying that Cyberpunk 2077 was one of the most hyped games this year, and people were very much salivating for its release ever since it was announced all the way back in 2013. While whether the game truly met this hype is a matter best left for another day, there s no denying the fact that  on one front that pretty much everyone had expected; the plot .\nCyberpunk s story is definitely one of its biggest highlights, with both the main quests and various side quests offering up some truly excellent writing that goes to show [...]",
+  "source_url": "https://news.google.com/__i/rss/rd/articles/CBMiO2h0dHBzOi8vZ2FtZXJhbnQuY29tL3N0b3J5LWhlYXZ5LWdhbWVzLWxpa2UtY3liZXJwdW5rLTIwNzcv0gE_aHR0cHM6Ly9nYW1lcmFudC5jb20vc3RvcnktaGVhdnktZ2FtZXMtbGlrZS1jeWJlcnB1bmstMjA3Ny9hbXAv?oc=5",
+  "source_name": "GameRant",
+  "category": "Technology",
+  "keywords": "Heavy Games To Play If You Loved Cyberpunk; GameRant It; Cyberpunk; CD Projekt Red; Final Fantasy VII Remake; Final Fantasy VII; System Shock; Katana ZERO; This CRPG; Steel Sky; CD Projekt; Gemini Rue; Hades; Supergiant Games; Fans of Hades; PlayStation; Final Fantasy VIII; Deus Ex; Rockstar Games; Grand Theft Auto; Fans of Cyberpunk"
+ },
+ {
+  "date": "2020-12-27T18:17:23Z",
+  "img": "https://newsradio.akamaized.net/images/593482582001/202012/3522/593482582001_6218464457001_6218463573001-vs.jpg?pubId=593482582001",
+  "title": "Annual Islamic convention goes global - CityNews Edmonton",
+  "content": " Following health guidelines, the annual Reviving the Islamic Spirit Convention will be virtual this year. Maleeha Sheikh has more on the massive event.\nDec 26, 2020, 4:36 PM\nAdvertisement\nHALIFAX - Over the span of 13 hours between April 18 and 19, 22 people were killed across 16 crime scenes in several towns in Nova Scotia in what became...\nWASHINGTON, D.C. - At the beginning of February, a split American Senate acquitted President Donald Trump in his impeachment trial. A\u00a0majority of senators\u00a0expressed unease with Trump\u2019s pressure campaign on Ukraine...                [...]",
+  "source_url": "https://news.google.com/__i/rss/rd/articles/CBMiVGh0dHBzOi8vZWRtb250b24uY2l0eW5ld3MuY2EvdmlkZW8vMjAyMC8xMi8yNi9hbm51YWwtaXNsYW1pYy1jb252ZW50aW9uLWdvZXMtZ2xvYmFsL9IBAA?oc=5",
+  "source_name": "CityNews Edmonton",
+  "category": "Technology",
+  "keywords": "Annual Islamic; CityNews Edmonton Following; Reviving the Islamic Spirit Convention; Maleeha Sheikh; PM Advertisement HALIFAX; Nova Scotia; WASHINGTON; American Senate; President Donald Trump; Trump; Ukraine"
+ },
+ {
+  "date": "2020-12-27T23:13:18Z",
+  "img": "https://cdn.winknews.com/wp-content/uploads/2020/12/1226-satmo-mayflowerrecreation-616355-640x360-1.jpg",
+  "title": "Artificial intelligence-powered boat to recreate Mayflower journey - Wink News",
+  "content": " The Mayflower carried some of the first European settlers across the Atlantic Ocean to North America, 400 years ago this year.\nTo commemorate the anniversary, another vessel is recreating that voyage, with the help of artificial intelligence .\n\u201cWe don\u2019t know how it\u2019s going to go. Is it going to make it across the Atlantic?\u201d software engineer and emerging technology specialist Rosie Lickorish told CBS News\u2019 Roxana Saberi. \u201cFingers crossed that it does have a successful first voyage.\u201d\nThe vessel, docked in the harbor of Plymouth, England, will rely on the latest navigation technology when it sets out to sea \u2014 but it [...]",
+  "source_url": "https://news.google.com/__i/rss/rd/articles/CBMiZ2h0dHBzOi8vd3d3LndpbmtuZXdzLmNvbS8yMDIwLzEyLzI2L2FydGlmaWNpYWwtaW50ZWxsaWdlbmNlLXBvd2VyZWQtYm9hdC10by1yZWNyZWF0ZS1tYXlmbG93ZXItam91cm5leS_SAQA?oc=5",
+  "source_name": "Wink News",
+  "category": "Technology",
+  "keywords": "Artificial; Mayflower; Wink News the Mayflower; Atlantic Ocean; Atlantic; Rosie Lickorish; CBS News; Roxana Saberi; Plymouth; England; Brett Phaneuf"
+ },
+ {
+  "date": "2020-12-27T21:49:18Z",
+  "img": "https://cdn.mos.cms.futurecdn.net/5Qeip2KxooQRnZpkGWfggd-1200-80.jpg",
+  "title": "The biggest PC gaming controversies of 2020 - PC Gamer",
+  "content": " 2020 was an exceptional year, but not much different from any other in terms of the number of videogame controversies we covered. From trouble with streamers to accusations of corporate wrongdoing, 2020 had it all. It even had the bungling of a massive game release, which you don t get every year. Cyberpunk 2077 s launch was even more contentious than \u2014except it was the consoles that got it worse in this case. How times have changed!\nBelow, I ve compiled some of the most controversial decisions, situations, and topics from the past year, with a rating that approximates how widespread [...]",
+  "source_url": "https://news.google.com/__i/rss/rd/articles/CBMiOGh0dHBzOi8vd3d3LnBjZ2FtZXIuY29tL3VrL3BjLWdhbWluZy1jb250cm92ZXJzaWVzLTIwMjAv0gE8aHR0cHM6Ly93d3cucGNnYW1lci5jb20vdWsvYW1wL3BjLWdhbWluZy1jb250cm92ZXJzaWVzLTIwMjAv?oc=5",
+  "source_name": "PC Gamer",
+  "category": "Technology",
+  "keywords": "PC; PC Gamer; Cyberpunk; Game of the Year Awards; CS; Valorant; Vanguard; Windows; Paul; Chamberlain; Warzone; Activision; In March; Trump US Health; Human Services Department; Epic; Apple; Fortnite; App Store; Epic CEO Tim Sweeney; US; Sue Apple; Sweeney"
+ },
+ {
+  "date": "2020-12-28T00:27:16Z",
+  "img": "https://cdn.mobilesyrup.com/wp-content/uploads/2020/12/airpods-max-waterfield-case-1-1.jpg",
+  "title": "WaterField Designs launches AirPods Max case with more durable design - MobileSyrup",
+  "content": " Its thin, flimsy and doesnt provide much protection to the pricey $779 headphones. Unfortunately, if youre hoping to ensure the AirPods Max battery lasts anywhere near 20 hours, youll need to use the case to turn the headphones off immediately after youre done using them.\nThankfully, as many predicted, third-party manufacturers are already working to fill the AirPods Max case void. WaterField Designs has  case that looks similar to what Beats headphones and pretty much any mid-range to high-end headphones come with. It features a compact, professional-looking design that actually covers the AirPods Max entirely, unlike the Apples official Smart [...]",
+  "source_url": "https://news.google.com/__i/rss/rd/articles/CBMiW2h0dHBzOi8vbW9iaWxlc3lydXAuY29tLzIwMjAvMTIvMjcvd2F0ZXJmaWVsZC1kZXNpZ25zLWFpcnBvZHMtbWF4LWNhc2UtbW9yZS1kdXJhYmxlLWRlc2lnbi_SAQA?oc=5",
+  "source_name": "MobileSyrup",
+  "category": "Technology",
+  "keywords": "WaterField Designs; AirPods Max; MobileSyrup Its; Unfortunately; Smart Case; AirPods Maxs; Apple; Lightning; WakeField Designs AirPods Pro; USD; CAD"
+ },
+ {
+  "date": "2020-12-27T18:30:14Z",
+  "img": "https://static1.gamerantimages.com/wordpress/wp-content/uploads/2020/12/Twitch-Streamer-Hollycannabis-Mouse.jpg",
+  "title": "Twitch Streamer s Christmas Dinner Ruined By Mouse | Game Rant - GameRant",
+  "content": " Christmas time allows  to spend with family. Some smaller streamers instead take the opportunity to spend the holiday on stream, connecting with viewers on a more intimate level. For Twitch streamer Hollycannabis, this stream was no different from her usual Just Chatting streams.\nFor this stream, Hollysettled on a chill showcase featuring her cooking skills and was preparing to remove a tray from the oven whena mousesprung from a kitchen drawer, landing in the oven. Moments later, when Holly checked the oven and drawer underneath, the rodent was nowhere to be found.\nSeveral minutes after the initial encounter, Holly investigated the [...]",
+  "source_url": "https://news.google.com/__i/rss/rd/articles/CBMiPGh0dHBzOi8vZ2FtZXJhbnQuY29tL3R3aXRjaC1zdHJlYW1lci1jaHJpc3RtYXMtZGlubmVyLW1vdXNlL9IBQGh0dHBzOi8vZ2FtZXJhbnQuY29tL3R3aXRjaC1zdHJlYW1lci1jaHJpc3RtYXMtZGlubmVyLW1vdXNlL2FtcC8?oc=5",
+  "source_name": "GameRant",
+  "category": "Technology",
+  "keywords": "Twitch Streamer; Christmas Dinner Ruined By Mouse; Game Rant; GameRant Christmas; For Twitch; Just Chatting; Holly; Christmas; AM; Though Holly; Minecraft; Twitch; Pokimane"
+ },
+ {
+  "date": "2020-12-27T19:50:13Z",
+  "img": "https://techcrunch.com/wp-content/uploads/2019/07/GettyImages-149615583.jpg?w=600",
+  "title": "Music made 2020 better, but we failed to make 2020 better for musicians",
+  "content": " I don\u2019t have a good answer to the question. Knowing full well that I\u2019m talking back to an algorithm \u2014 even one asking the same question of everyone with a different band mad-libbed in \u2014 doesn\u2019t soften the blow. Am I? Are we? Is anyone, really?\nIn this case, it\u2019s referring to Waxahatchee. I mean, yeah, I totally listened to a lot of Waxahatchee this year. Waxahatchee is good. Saint Cloud was one of my favorite albums of the year. Katie Crutchfield\u2019s music doesn\u2019t exist in the Elliott Smith, Leonard Cohen bin for me. It\u2019s not time to send up the [...]",
+  "source_url": "http://feedproxy.google.com/~r/Techcrunch/~3/s-9XZNgq9No/",
+  "source_name": "TechCrunch",
+  "category": "Technology",
+  "keywords": "Am IA Are; Waxahatchee; Saint Cloud; Katie Crutchfield; Elliott Smith; Leonard Cohen; Spotify; AI; CNN; Turner Doomsday Video; Nearer My God To Thee; Titanic; HFR; Oliver Sacks; Louis Armstrong; Wilco; Jeff Tweedy; In May; COVID; Tweedy; Bandcamp; Bandcamp Fridays; CEO Daniel Ek; In October; Galaxie; Damon Kurkowski; Jazz; Thelonious Monk; Baroness Pannonica"
+ },
+ {
+  "date": "2020-12-27T21:26:12Z",
+  "img": "https://media.wired.com/photos/5fab1094227dbb78ec30db78/191:100/w_1280,c_limit/Gear-PS5-src-Sony.jpg",
+  "title": "PlayStation 5 Tips: 15 Settings and Features You Should Try - WIRED",
+  "content": " Whether you were lucky enough to snag Sony s new PlayStation 5 on release day, fast enough to grab one when stock resurfaced, or you scored one for Christmas, the important thing is you have one. Congrats, and welcome to the wonderful world of next-gen console gaming! We ve collected a few tips and not so obvious features that will help you make the most of your new console.\nLooking for accessories to kit out your new system? Check out our Best Gaming Headsets , Best Wireless Gaming Headsets , and  guides for our top picks. If you just want [...]",
+  "source_url": "https://news.google.com/__i/rss/rd/articles/CBMiPGh0dHBzOi8vd3d3LndpcmVkLmNvbS9zdG9yeS9wbGF5c3RhdGlvbi01LXRpcHMtYW5kLWZlYXR1cmVzL9IBP2h0dHBzOi8vd3d3LndpcmVkLmNvbS9zdG9yeS9wbGF5c3RhdGlvbi01LXRpcHMtYW5kLWZlYXR1cmVzL2FtcA?oc=5",
+  "source_name": "WIRED",
+  "category": "Technology",
+  "keywords": "PlayStation; Features You Should Try; WIRED Whether; Sony; Christmas; Congrats; Best Gaming Headsets; Best Wireless Gaming Headsets; WIRED; Learn How; Turn Off; Transfer Files; Games From Your; Wi; Fi; System Software; Choose Data Transfer; When Prepare; Data Transfer; Start Transfer; See How Long You; Game It; Games; Make Sure You; Game While; Game Library; Tweak Your Controller Settings; DualSense; DualShock; Get More Immersive Sound With; Audio Output; Audio Profile; Play Astro; Playroom; Then Delete It Every; Astro; Console Storage; Don; PlayStation Store; Get More Storage Space One of; SSD; HDD; USB; Choose Your Game Presets You; Saved Data; App Settings; Game Presets"
+ },
+ {
+  "date": "2020-12-27T23:27:13Z",
+  "img": "https://cdn.mobilesyrup.com/wp-content/uploads/2020/10/pixel-4a-5g-header-1024x576.jpg",
+  "title": "Google Camera update removes astrophotography on ultra-wide cameras - MobileSyrup",
+  "content": " As spotted by 9to5Google , Pixel 5 and 4a 5G owners can no longer access astrophotography when using the ultra-wide camera on their devices. As of the Camera 8.1 update, a small bubble appears on-screen noting users must Zoom to 1x for astrophotography.\nDespite the change, the ultra-wide camera still works with Night Sight, Googles software-based low-light photography feature.\nFurther, Google updated a support document about the feature to note that it only works on zoom settings equal or greater than 1x on the Pixel 4a 5G and Pixel 5.\nIt remains unclear why Google chose to restrict the feature, especially given that [...]",
+  "source_url": "https://news.google.com/__i/rss/rd/articles/CBMiVGh0dHBzOi8vbW9iaWxlc3lydXAuY29tLzIwMjAvMTIvMjcvZ29vZ2xlLWNhbWVyYS11cGRhdGUtYXN0cm9waG90b2dyYXBoeS11bHRyYS13aWRlL9IBAA?oc=5",
+  "source_name": "MobileSyrup",
+  "category": "Technology",
+  "keywords": "Google Camera; MobileSyrup As; Pixel; As of the Camera; Zoom; Night Sight; Googles; Google; UI"
+ },
+ {
+  "date": "2020-12-27T16:04:15Z",
+  "img": "https://cdn.mobilesyrup.com/wp-content/uploads/2020/12/cyberpunk-2077-3-1024x541.jpg",
+  "title": "Lawsuit alleges CDPR misled investors about Cyberpunk 2077 issues - MobileSyrup",
+  "content": " Plaintiff Andrew Trampe hopes to bring other investors on board with the lawsuit, which would make it a class action. The suit alleges that CDPR misled investors about the state of Cyberpunk, instead marketing it as a success with only a few minor issues.\nAccording to Bloomberg , CDPR says it will vigorously defend itself against the lawsuit.\nCyberpunk 2077 launched in a bad state with . While some platforms fared better than others, the issues were pervasive across gaming platforms. Older consoles got the worst of it Cyberpunk was basically unplayable on PlayStation 4 and Xbox One consoles. Sony opted to [...]",
+  "source_url": "https://news.google.com/__i/rss/rd/articles/CBMiP2h0dHBzOi8vbW9iaWxlc3lydXAuY29tLzIwMjAvMTIvMjcvY2Rwci1jeWJlcnB1bmstMjA3Ny1sYXdzdWl0L9IBAA?oc=5",
+  "source_name": "MobileSyrup",
+  "category": "Technology",
+  "keywords": "CDPR; Cyberpunk; MobileSyrup Plaintiff Andrew Trampe; Bloomberg; PlayStation; Xbox One; Sony; PlayStation Store; Verge"
+ }
+]
+
+
+    var app = new Vue({
+        el: '#app',
+        data: {
+            articles: articles
+        },
+        methods: {
+            timeSince: (date) => {
+
+                var seconds = Math.floor((new Date() - new Date(date)) / 1000);
+
+                var interval = seconds / 31536000;
+
+                if (interval > 1) {
+                    return Math.floor(interval) + " years";
+                }
+                interval = seconds / 2592000;
+                if (interval > 1) {
+                    return Math.floor(interval) + " months";
+                }
+                interval = seconds / 86400;
+                if (interval > 1) {
+                    return Math.floor(interval) + " days";
+                }
+                interval = seconds / 3600;
+                if (interval > 1) {
+                    return Math.floor(interval) + " hours";
+                }
+                interval = seconds / 60;
+                if (interval > 1) {
+                    return Math.floor(interval) + " minutes";
+                }
+                return Math.floor(seconds) + " seconds";
+            }
+        }
+    })
+</script>
+</body>
+</html>

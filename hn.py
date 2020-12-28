@@ -134,7 +134,12 @@ def get_news_data(urls):
 
         out.append({
             "title": general_data['title'],
-            "sentences": summary_data['sentences']
+            "author": general_data['author'],
+            "date": general_data['publishDate'],
+            "article": general_data['article'],
+            "image": general_data['image'],
+            "sentences": summary_data['sentences'],
+            "url": url,
         })
 
     return out
