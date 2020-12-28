@@ -12,12 +12,11 @@ import pydub
 import requests
 import jinja2
 import logging
+import storage
 
 logging.basicConfig(level=logging.INFO)
 
-#from aylienapiclient import textapi
 from aylien import summarize
-from google.cloud import storage
 from ibm_watson import TextToSpeechV1
 from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
 
@@ -39,27 +38,11 @@ PODCASTS_FOLDER = "podcasts"
 NEWS_DATA_FOLDER = "news_data"
 TEMP_FOLDER = "temp"
 
-storage_client = storage.Client.from_service_account_json(SERVICE_ACCOUNT_CREDS)
 t = jinja2.FileSystemLoader(TEMPLATE_FOLDER)
 authenticator = IAMAuthenticator(IBM_API_KEY)
 text_to_speech = TextToSpeechV1(authenticator=authenticator)
 text_to_speech.set_service_url(TTS_URL_IBM)
 
-
-def upload_blob(bucket_name, blob_name, data):
-    bucket = storage_client.get_bucket(bucket_name)
-    blob = bucket.blob(blob_name)
-    blob.upload_from_string(data)
-
-def upload_file(bucket_name, blob_name, fn):
-    bucket = storage_client.get_bucket(bucket_name)
-    blob = bucket.blob(blob_name)
-    blob.upload_from_filename(fn)
-
-def blob_exists(bucket_name, blob_name):
-    bucket = storage_client.get_bucket(bucket_name)
-    blob = bucket.blob(blob_name)
-    return blob.exists()
 
 def ssml_to_audio_google(ssml, format='audio/ogg;codecs=opus', voice_type=VOICE_TYPE, voice_gender=VOICE_GENDER, voice_lang=VOICE_LANG):
     accept_to_format = {
@@ -197,7 +180,7 @@ def generate_podcast(news_items, news_date, podcast_fn):
     final.export(podcast_fn, format="mp3")
 
     logging.info('uploading...')
-    upload_file(BUCKET_NAME, podcast_fn, podcast_fn)
+    storage.upload_file(BUCKET_NAME, podcast_fn, podcast_fn)
 
 
 def generate_rss_feed():
@@ -244,4 +227,4 @@ if __name__ == '__main__':
 
     rss_feed = generate_rss_feed()
     print(rss_feed)
-    upload_blob(BUCKET_NAME, 'bestofhn.rss', rss_feed)
+    storage.upload_blob(BUCKET_NAME, 'bestofhn.rss', rss_feed)

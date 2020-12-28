@@ -1,0 +1,249 @@
+<html>
+<head>
+    <script src="https://unpkg.com/vue"></script>
+    <script src="https://unpkg.com/buefy/dist/buefy.min.js"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css">
+    <link rel="stylesheet" href="https://jenil.github.io/bulmaswatch/darkly/bulmaswatch.min.css">
+
+
+</head>
+
+<body>
+<div id="app">
+
+    <nav class="navbar is-fixed-top is-dark">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="https://bulma.io"><strong class="is-size-5"><span style="color: lightgreen">&lt;/&gt;</span>
+                TechNews</strong></a>
+
+            <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false"
+               data-target="navbarBasicExample">
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+            </a>
+        </div>
+
+        <div id="navbarBasicExample" class="navbar-menu">
+
+        </div>
+    </nav>
+
+    <div class="container" style="padding-top: 60px;">
+
+        <div style="width: 600px; margin: 30px auto" class="is-size-3">Tech News of the day - {{ (new
+            Date()).toLocaleDateString() }}
+        </div>
+        <div v-for="article in articles" class="box" style="width: 600px; margin: 30px auto">
+
+            <article class="media">
+                <div class="media-content">
+                    <div class="content">
+                        <a :href="article.source_url" target="_blank"><img :src="article.img" style="width: 100%; margin-bottom: 20px"></a>
+                        <p class="is-size-5"><strong><a :href="article.source_url" target="_blank">{{ article.title }}</a></strong></p>
+                        <p>{{ article.content }}</p>
+                        <p style="color: gray">
+                            <strong v-if="article.source_name">{{ article.source_name }}</strong>, <small>{{ timeSince(article.date) }} ago</small>
+                        </p>
+                    </div>
+                </div>
+            </article>
+
+        </div>
+    </div>
+
+</div>
+
+<script>
+    let articles = [
+ {
+  "date": "2020-12-27T20:12:11Z",
+  "img": "https://cdn57.androidauthority.net/wp-content/uploads/2020/12/ps5-vs-xbox-series-x-wireless-controller-920x470.jpeg",
+  "title": "Team AA: Our favorite video games of 2020 on console, PC, and mobile - Android Authority",
+  "content": " We have a large number of gamers on staff here at Android Authority, and this year has been an interesting one for games. It not only saw the release of the long-awaited PlayStation 5 and Xbox Series X and Xbox Series S consoles, but it also left us with a bit more time at home to enjoy them (for better or for worse).\nTo round off the year, weve put together a list of our favorite video games released (or re-released) in 2020 on any and all platforms. They run the gamut of free-to-play mobile games to console-exclusives to remakes of [...]",
+  "source_url": "https://news.google.com/__i/rss/rd/articles/CBMiOWh0dHBzOi8vd3d3LmFuZHJvaWRhdXRob3JpdHkuY29tL2Jlc3QtZ2FtZXMtMjAyMC0xMTg3MjA0L9IBPWh0dHBzOi8vd3d3LmFuZHJvaWRhdXRob3JpdHkuY29tL2Jlc3QtZ2FtZXMtMjAyMC0xMTg3MjA0L2FtcC8?oc=5",
+  "source_name": "Android Authority",
+  "category": "Technology",
+  "keywords": "Team AA; PC; Android Authority We; Android Authority; PlayStation; Xbox Series; Genshin Impact; Breath of the Wild; Tristan Rayners; Animal Crossing; New Horizons; Nintendo Switch; Amazon We; Resident Evil; Scott Brown; Paper Mario; Origami King; Last of Us; Part II; Doom Eternal; Hyrule Warriors; Age of Calamity; Im; Amazon Hadlee Simons; Project Wingman; Aussie; Kickstarter; Ace Combat; Halo; Master Chief Collection; Steam Our; Joe Hindy; Final Fantasy VII Remake; Joe; Amazon Hades; Sound Guys; Sam Moore; Supergiant Games; Sam; Steam The Persona; Japanese RPGs; Oliver Cragg; Atlus; RPGs; Phantom Thieves; Joker; Tokyo; Amazon; Jonathan Feist; Play Store; Seven Deadly Sins; Beeg Whales; Download; Grand Cross News; Jimmy Westenberg; Tony Hawks Pro Skater; Xbox One; Jimmy; Tony Hawk"
+ },
+ {
+  "date": "2020-12-27T17:01:18Z",
+  "img": "https://wp-assets.futurism.com/2020/01/lifelock-1200x629.jpg",
+  "title": "Identity Theft Only Takes a Minute. Luckily, So Does Protecting Against It.",
+  "content": " As you might expect, people are Christmas shopping online in record levels in 2020. Although various e-commerce companies are trying to create a safer environment, . One in four Americans have fallen victim to identity theft or credit card fraud while holiday shopping, with 35-percent falling victim online. And that number is sure to rise. However, LifeLock by Norton is a service that can help to keep your information safe . With 15-years of experience in identity theft protection, it\u2019s guaranteed to help reduce your risk of becoming a victim.\nLifeLock\nIdentity theft comes in various forms. After acquiring your personal information, [...]",
+  "source_url": "https://futurism.com/identity-theft-protection-life-lock",
+  "source_name": "futurism.com",
+  "category": "Technology",
+  "keywords": "Identity Theft Only Takes; So Does Protecting Against It; Christmas; LifeLock; Norton; LifeLock Identity; Identity Theft Resource Center; VPN; WiFi; Android; Ultimate Plus; Standard Plan; Ultimate Plus Plan; USPS; Futurism"
+ },
+ {
+  "date": "2020-12-28T01:30:12Z",
+  "img": "https://www.talkesport.com/wp-content/uploads/Forsen-banned-from-twitch.jpg",
+  "title": "Forsen Unbanned On Twitch After One Month Suspension, Announces Return Stream - TalkEsport",
+  "content": " Sebastian \u2018Forsen\u2019 Fors\u00a0is set to make his return on Twitch after he was banned in November over an inappropriate GIF.\nForsen\u2019s ban sparked a bit of controversy as he was unaware of the content while broadcasting it on stream which makes it a total unintentional violation of the community guidelines. For a mistake this unintentional, he was handed a harsh ban however it was lifted right after Christmas. They are many instances where streamers have accidentally shown inappropriate content but Twitch let them pass.\nSo apparently I\u2019m unbanned! I\u2019ll cu guys tomorrow at 7pm cet. Thats all.\nThe community outrage against the Forsen [...]",
+  "source_url": "https://news.google.com/__i/rss/rd/articles/CBMiNGh0dHBzOi8vd3d3LnRhbGtlc3BvcnQuY29tL25ld3MvdHdpdGNoLXVuYmFuLWZvcnNlbi_SAQA?oc=5",
+  "source_name": "TalkEsport",
+  "category": "Technology",
+  "keywords": "Forsen Unbanned On Twitch After One Month Suspension; Announces Return Stream; TalkEsport Sebastian; Forsen; Twitch; GIF; Christmas; Among Us; Fall Guys; Cyberpunk"
+ },
+ {
+  "date": "2020-12-27T23:03:14Z",
+  "img": "https://i.cbc.ca/1.5853046.1608741065!/fileImage/httpImage/image.jpg_gen/derivatives/16x9_620/gary-peddle-and-mitch-ghaney.jpg",
+  "title": "What two brothers taught me about drug addiction. And why I need to apologize. - CBC.ca",
+  "content": " Appearances can be deceiving. Anthony Germain learned that lesson \u2014 and quite a lot more \u2014 from Mitch and Gary, two brothers whose tale involves addiction, love and a call for change.\nIt s not unusual for any journalist who pushes stories and topics with a degree of zeal to apologize from time to time for mistakes that get on the air.\nBut I need to say I m sorry to two brothers named Mitch and Gary for something that happened off the air.\nYou see, Mitch is a cool, slender dude with long hair (probably the hairiest man I have ever interviewed) [...]",
+  "source_url": "https://news.google.com/__i/rss/rd/articles/CBMiW2h0dHBzOi8vd3d3LmNiYy5jYS9uZXdzL2NhbmFkYS9uZXdmb3VuZGxhbmQtbGFicmFkb3IvZ2VybWFpbi1wb2ludG9mdmlldy1icm90aGVycy0xLjU4NTI5MDjSASBodHRwczovL3d3dy5jYmMuY2EvYW1wLzEuNTg1MjkwOA?oc=5",
+  "source_name": "CBC.ca",
+  "category": "Technology",
+  "keywords": "Anthony Germain; Mitch; Gary; And Gary; St; John; Mitch Ghaney; Newfoundland; Labrador; Gary Peddle"
+ },
+ {
+  "date": "2020-12-27T19:31:12Z",
+  "img": "https://techcrunch.com/wp-content/uploads/2019/01/GettyImages-911746532.jpg?w=600",
+  "title": "What startups can learn from this dumpster fire year",
+  "content": " Even with a distracting bull market, I wanted to reflect and see how the youngest startups are faring. Alex Wilhem and I dove into data, provided by Pitchbook, to see if the next DoorDashes and Airbnbs are getting their first financings.\nThe answer is that . COVID-19 shook up which startups were considered attractive by private investors. And that changeup came at risk to certain sectors and people.\nHere\u2019s how two investors explained the dynamics :\nI think seed prices are being driven up by the larger [venture] firms playing earlier and feeling like they cannot afford to miss the next DoorDash. I [...]",
+  "source_url": "http://feedproxy.google.com/~r/Techcrunch/~3/HTJUrTZmLwk/",
+  "source_name": "TechCrunch",
+  "category": "Technology",
+  "keywords": "Alex Wilhem; Airbnbs; COVID; DoorDash; New Year; Bryce Durbin; TechCrunch Funding; TC Sessions; Chris Boshuizen of; Planet Labs; Image of Uncle Sam; Space Force"
+ },
+ {
+  "date": "2020-12-27T20:12:12Z",
+  "img": "https://static3.gamerantimages.com/wordpress/wp-content/uploads/2020/12/Story-heavy-games-like-Cyberpunk-2077.jpg",
+  "title": "10 Story-Heavy Games To Play If You Loved Cyberpunk 2077 - GameRant",
+  "content": " It goes without saying that Cyberpunk 2077 was one of the most hyped games this year, and people were very much salivating for its release ever since it was announced all the way back in 2013. While whether the game truly met this hype is a matter best left for another day, there s no denying the fact that  on one front that pretty much everyone had expected; the plot .\nCyberpunk s story is definitely one of its biggest highlights, with both the main quests and various side quests offering up some truly excellent writing that goes to show [...]",
+  "source_url": "https://news.google.com/__i/rss/rd/articles/CBMiO2h0dHBzOi8vZ2FtZXJhbnQuY29tL3N0b3J5LWhlYXZ5LWdhbWVzLWxpa2UtY3liZXJwdW5rLTIwNzcv0gE_aHR0cHM6Ly9nYW1lcmFudC5jb20vc3RvcnktaGVhdnktZ2FtZXMtbGlrZS1jeWJlcnB1bmstMjA3Ny9hbXAv?oc=5",
+  "source_name": "GameRant",
+  "category": "Technology",
+  "keywords": "Heavy Games To Play If You Loved Cyberpunk; GameRant It; Cyberpunk; CD Projekt Red; Final Fantasy VII Remake; Final Fantasy VII; System Shock; Katana ZERO; This CRPG; Steel Sky; CD Projekt; Gemini Rue; Hades; Supergiant Games; Fans of Hades; PlayStation; Final Fantasy VIII; Deus Ex; Rockstar Games; Grand Theft Auto; Fans of Cyberpunk"
+ },
+ {
+  "date": "2020-12-27T18:17:23Z",
+  "img": "https://newsradio.akamaized.net/images/593482582001/202012/3522/593482582001_6218464457001_6218463573001-vs.jpg?pubId=593482582001",
+  "title": "Annual Islamic convention goes global - CityNews Edmonton",
+  "content": " Following health guidelines, the annual Reviving the Islamic Spirit Convention will be virtual this year. Maleeha Sheikh has more on the massive event.\nDec 26, 2020, 4:36 PM\nAdvertisement\nHALIFAX - Over the span of 13 hours between April 18 and 19, 22 people were killed across 16 crime scenes in several towns in Nova Scotia in what became...\nWASHINGTON, D.C. - At the beginning of February, a split American Senate acquitted President Donald Trump in his impeachment trial. A\u00a0majority of senators\u00a0expressed unease with Trump\u2019s pressure campaign on Ukraine...                [...]",
+  "source_url": "https://news.google.com/__i/rss/rd/articles/CBMiVGh0dHBzOi8vZWRtb250b24uY2l0eW5ld3MuY2EvdmlkZW8vMjAyMC8xMi8yNi9hbm51YWwtaXNsYW1pYy1jb252ZW50aW9uLWdvZXMtZ2xvYmFsL9IBAA?oc=5",
+  "source_name": "CityNews Edmonton",
+  "category": "Technology",
+  "keywords": "Annual Islamic; CityNews Edmonton Following; Reviving the Islamic Spirit Convention; Maleeha Sheikh; PM Advertisement HALIFAX; Nova Scotia; WASHINGTON; American Senate; President Donald Trump; Trump; Ukraine"
+ },
+ {
+  "date": "2020-12-27T23:13:18Z",
+  "img": "https://cdn.winknews.com/wp-content/uploads/2020/12/1226-satmo-mayflowerrecreation-616355-640x360-1.jpg",
+  "title": "Artificial intelligence-powered boat to recreate Mayflower journey - Wink News",
+  "content": " The Mayflower carried some of the first European settlers across the Atlantic Ocean to North America, 400 years ago this year.\nTo commemorate the anniversary, another vessel is recreating that voyage, with the help of artificial intelligence .\n\u201cWe don\u2019t know how it\u2019s going to go. Is it going to make it across the Atlantic?\u201d software engineer and emerging technology specialist Rosie Lickorish told CBS News\u2019 Roxana Saberi. \u201cFingers crossed that it does have a successful first voyage.\u201d\nThe vessel, docked in the harbor of Plymouth, England, will rely on the latest navigation technology when it sets out to sea \u2014 but it [...]",
+  "source_url": "https://news.google.com/__i/rss/rd/articles/CBMiZ2h0dHBzOi8vd3d3LndpbmtuZXdzLmNvbS8yMDIwLzEyLzI2L2FydGlmaWNpYWwtaW50ZWxsaWdlbmNlLXBvd2VyZWQtYm9hdC10by1yZWNyZWF0ZS1tYXlmbG93ZXItam91cm5leS_SAQA?oc=5",
+  "source_name": "Wink News",
+  "category": "Technology",
+  "keywords": "Artificial; Mayflower; Wink News the Mayflower; Atlantic Ocean; Atlantic; Rosie Lickorish; CBS News; Roxana Saberi; Plymouth; England; Brett Phaneuf"
+ },
+ {
+  "date": "2020-12-27T21:49:18Z",
+  "img": "https://cdn.mos.cms.futurecdn.net/5Qeip2KxooQRnZpkGWfggd-1200-80.jpg",
+  "title": "The biggest PC gaming controversies of 2020 - PC Gamer",
+  "content": " 2020 was an exceptional year, but not much different from any other in terms of the number of videogame controversies we covered. From trouble with streamers to accusations of corporate wrongdoing, 2020 had it all. It even had the bungling of a massive game release, which you don t get every year. Cyberpunk 2077 s launch was even more contentious than \u2014except it was the consoles that got it worse in this case. How times have changed!\nBelow, I ve compiled some of the most controversial decisions, situations, and topics from the past year, with a rating that approximates how widespread [...]",
+  "source_url": "https://news.google.com/__i/rss/rd/articles/CBMiOGh0dHBzOi8vd3d3LnBjZ2FtZXIuY29tL3VrL3BjLWdhbWluZy1jb250cm92ZXJzaWVzLTIwMjAv0gE8aHR0cHM6Ly93d3cucGNnYW1lci5jb20vdWsvYW1wL3BjLWdhbWluZy1jb250cm92ZXJzaWVzLTIwMjAv?oc=5",
+  "source_name": "PC Gamer",
+  "category": "Technology",
+  "keywords": "PC; PC Gamer; Cyberpunk; Game of the Year Awards; CS; Valorant; Vanguard; Windows; Paul; Chamberlain; Warzone; Activision; In March; Trump US Health; Human Services Department; Epic; Apple; Fortnite; App Store; Epic CEO Tim Sweeney; US; Sue Apple; Sweeney"
+ },
+ {
+  "date": "2020-12-28T00:27:16Z",
+  "img": "https://cdn.mobilesyrup.com/wp-content/uploads/2020/12/airpods-max-waterfield-case-1-1.jpg",
+  "title": "WaterField Designs launches AirPods Max case with more durable design - MobileSyrup",
+  "content": " Its thin, flimsy and doesnt provide much protection to the pricey $779 headphones. Unfortunately, if youre hoping to ensure the AirPods Max battery lasts anywhere near 20 hours, youll need to use the case to turn the headphones off immediately after youre done using them.\nThankfully, as many predicted, third-party manufacturers are already working to fill the AirPods Max case void. WaterField Designs has  case that looks similar to what Beats headphones and pretty much any mid-range to high-end headphones come with. It features a compact, professional-looking design that actually covers the AirPods Max entirely, unlike the Apples official Smart [...]",
+  "source_url": "https://news.google.com/__i/rss/rd/articles/CBMiW2h0dHBzOi8vbW9iaWxlc3lydXAuY29tLzIwMjAvMTIvMjcvd2F0ZXJmaWVsZC1kZXNpZ25zLWFpcnBvZHMtbWF4LWNhc2UtbW9yZS1kdXJhYmxlLWRlc2lnbi_SAQA?oc=5",
+  "source_name": "MobileSyrup",
+  "category": "Technology",
+  "keywords": "WaterField Designs; AirPods Max; MobileSyrup Its; Unfortunately; Smart Case; AirPods Maxs; Apple; Lightning; WakeField Designs AirPods Pro; USD; CAD"
+ },
+ {
+  "date": "2020-12-27T18:30:14Z",
+  "img": "https://static1.gamerantimages.com/wordpress/wp-content/uploads/2020/12/Twitch-Streamer-Hollycannabis-Mouse.jpg",
+  "title": "Twitch Streamer s Christmas Dinner Ruined By Mouse | Game Rant - GameRant",
+  "content": " Christmas time allows  to spend with family. Some smaller streamers instead take the opportunity to spend the holiday on stream, connecting with viewers on a more intimate level. For Twitch streamer Hollycannabis, this stream was no different from her usual Just Chatting streams.\nFor this stream, Hollysettled on a chill showcase featuring her cooking skills and was preparing to remove a tray from the oven whena mousesprung from a kitchen drawer, landing in the oven. Moments later, when Holly checked the oven and drawer underneath, the rodent was nowhere to be found.\nSeveral minutes after the initial encounter, Holly investigated the [...]",
+  "source_url": "https://news.google.com/__i/rss/rd/articles/CBMiPGh0dHBzOi8vZ2FtZXJhbnQuY29tL3R3aXRjaC1zdHJlYW1lci1jaHJpc3RtYXMtZGlubmVyLW1vdXNlL9IBQGh0dHBzOi8vZ2FtZXJhbnQuY29tL3R3aXRjaC1zdHJlYW1lci1jaHJpc3RtYXMtZGlubmVyLW1vdXNlL2FtcC8?oc=5",
+  "source_name": "GameRant",
+  "category": "Technology",
+  "keywords": "Twitch Streamer; Christmas Dinner Ruined By Mouse; Game Rant; GameRant Christmas; For Twitch; Just Chatting; Holly; Christmas; AM; Though Holly; Minecraft; Twitch; Pokimane"
+ },
+ {
+  "date": "2020-12-27T19:50:13Z",
+  "img": "https://techcrunch.com/wp-content/uploads/2019/07/GettyImages-149615583.jpg?w=600",
+  "title": "Music made 2020 better, but we failed to make 2020 better for musicians",
+  "content": " I don\u2019t have a good answer to the question. Knowing full well that I\u2019m talking back to an algorithm \u2014 even one asking the same question of everyone with a different band mad-libbed in \u2014 doesn\u2019t soften the blow. Am I? Are we? Is anyone, really?\nIn this case, it\u2019s referring to Waxahatchee. I mean, yeah, I totally listened to a lot of Waxahatchee this year. Waxahatchee is good. Saint Cloud was one of my favorite albums of the year. Katie Crutchfield\u2019s music doesn\u2019t exist in the Elliott Smith, Leonard Cohen bin for me. It\u2019s not time to send up the [...]",
+  "source_url": "http://feedproxy.google.com/~r/Techcrunch/~3/s-9XZNgq9No/",
+  "source_name": "TechCrunch",
+  "category": "Technology",
+  "keywords": "Am IA Are; Waxahatchee; Saint Cloud; Katie Crutchfield; Elliott Smith; Leonard Cohen; Spotify; AI; CNN; Turner Doomsday Video; Nearer My God To Thee; Titanic; HFR; Oliver Sacks; Louis Armstrong; Wilco; Jeff Tweedy; In May; COVID; Tweedy; Bandcamp; Bandcamp Fridays; CEO Daniel Ek; In October; Galaxie; Damon Kurkowski; Jazz; Thelonious Monk; Baroness Pannonica"
+ },
+ {
+  "date": "2020-12-27T21:26:12Z",
+  "img": "https://media.wired.com/photos/5fab1094227dbb78ec30db78/191:100/w_1280,c_limit/Gear-PS5-src-Sony.jpg",
+  "title": "PlayStation 5 Tips: 15 Settings and Features You Should Try - WIRED",
+  "content": " Whether you were lucky enough to snag Sony s new PlayStation 5 on release day, fast enough to grab one when stock resurfaced, or you scored one for Christmas, the important thing is you have one. Congrats, and welcome to the wonderful world of next-gen console gaming! We ve collected a few tips and not so obvious features that will help you make the most of your new console.\nLooking for accessories to kit out your new system? Check out our Best Gaming Headsets , Best Wireless Gaming Headsets , and  guides for our top picks. If you just want [...]",
+  "source_url": "https://news.google.com/__i/rss/rd/articles/CBMiPGh0dHBzOi8vd3d3LndpcmVkLmNvbS9zdG9yeS9wbGF5c3RhdGlvbi01LXRpcHMtYW5kLWZlYXR1cmVzL9IBP2h0dHBzOi8vd3d3LndpcmVkLmNvbS9zdG9yeS9wbGF5c3RhdGlvbi01LXRpcHMtYW5kLWZlYXR1cmVzL2FtcA?oc=5",
+  "source_name": "WIRED",
+  "category": "Technology",
+  "keywords": "PlayStation; Features You Should Try; WIRED Whether; Sony; Christmas; Congrats; Best Gaming Headsets; Best Wireless Gaming Headsets; WIRED; Learn How; Turn Off; Transfer Files; Games From Your; Wi; Fi; System Software; Choose Data Transfer; When Prepare; Data Transfer; Start Transfer; See How Long You; Game It; Games; Make Sure You; Game While; Game Library; Tweak Your Controller Settings; DualSense; DualShock; Get More Immersive Sound With; Audio Output; Audio Profile; Play Astro; Playroom; Then Delete It Every; Astro; Console Storage; Don; PlayStation Store; Get More Storage Space One of; SSD; HDD; USB; Choose Your Game Presets You; Saved Data; App Settings; Game Presets"
+ },
+ {
+  "date": "2020-12-27T23:27:13Z",
+  "img": "https://cdn.mobilesyrup.com/wp-content/uploads/2020/10/pixel-4a-5g-header-1024x576.jpg",
+  "title": "Google Camera update removes astrophotography on ultra-wide cameras - MobileSyrup",
+  "content": " As spotted by 9to5Google , Pixel 5 and 4a 5G owners can no longer access astrophotography when using the ultra-wide camera on their devices. As of the Camera 8.1 update, a small bubble appears on-screen noting users must Zoom to 1x for astrophotography.\nDespite the change, the ultra-wide camera still works with Night Sight, Googles software-based low-light photography feature.\nFurther, Google updated a support document about the feature to note that it only works on zoom settings equal or greater than 1x on the Pixel 4a 5G and Pixel 5.\nIt remains unclear why Google chose to restrict the feature, especially given that [...]",
+  "source_url": "https://news.google.com/__i/rss/rd/articles/CBMiVGh0dHBzOi8vbW9iaWxlc3lydXAuY29tLzIwMjAvMTIvMjcvZ29vZ2xlLWNhbWVyYS11cGRhdGUtYXN0cm9waG90b2dyYXBoeS11bHRyYS13aWRlL9IBAA?oc=5",
+  "source_name": "MobileSyrup",
+  "category": "Technology",
+  "keywords": "Google Camera; MobileSyrup As; Pixel; As of the Camera; Zoom; Night Sight; Googles; Google; UI"
+ },
+ {
+  "date": "2020-12-27T16:04:15Z",
+  "img": "https://cdn.mobilesyrup.com/wp-content/uploads/2020/12/cyberpunk-2077-3-1024x541.jpg",
+  "title": "Lawsuit alleges CDPR misled investors about Cyberpunk 2077 issues - MobileSyrup",
+  "content": " Plaintiff Andrew Trampe hopes to bring other investors on board with the lawsuit, which would make it a class action. The suit alleges that CDPR misled investors about the state of Cyberpunk, instead marketing it as a success with only a few minor issues.\nAccording to Bloomberg , CDPR says it will vigorously defend itself against the lawsuit.\nCyberpunk 2077 launched in a bad state with . While some platforms fared better than others, the issues were pervasive across gaming platforms. Older consoles got the worst of it Cyberpunk was basically unplayable on PlayStation 4 and Xbox One consoles. Sony opted to [...]",
+  "source_url": "https://news.google.com/__i/rss/rd/articles/CBMiP2h0dHBzOi8vbW9iaWxlc3lydXAuY29tLzIwMjAvMTIvMjcvY2Rwci1jeWJlcnB1bmstMjA3Ny1sYXdzdWl0L9IBAA?oc=5",
+  "source_name": "MobileSyrup",
+  "category": "Technology",
+  "keywords": "CDPR; Cyberpunk; MobileSyrup Plaintiff Andrew Trampe; Bloomberg; PlayStation; Xbox One; Sony; PlayStation Store; Verge"
+ }
+]
+
+
+    var app = new Vue({
+        el: '#app',
+        data: {
+            articles: articles
+        },
+        methods: {
+            timeSince: (date) => {
+
+                var seconds = Math.floor((new Date() - new Date(date)) / 1000);
+
+                var interval = seconds / 31536000;
+
+                if (interval > 1) {
+                    return Math.floor(interval) + " years";
+                }
+                interval = seconds / 2592000;
+                if (interval > 1) {
+                    return Math.floor(interval) + " months";
+                }
+                interval = seconds / 86400;
+                if (interval > 1) {
+                    return Math.floor(interval) + " days";
+                }
+                interval = seconds / 3600;
+                if (interval > 1) {
+                    return Math.floor(interval) + " hours";
+                }
+                interval = seconds / 60;
+                if (interval > 1) {
+                    return Math.floor(interval) + " minutes";
+                }
+                return Math.floor(seconds) + " seconds";
+            }
+        }
+    })
+</script>
+</body>
+</html>

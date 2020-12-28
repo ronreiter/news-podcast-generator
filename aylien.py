@@ -3,7 +3,7 @@ import http.client
 import json
 
 headers = {
-    'x-rapidapi-key': AYLIEN_RAPIDAPI_KEY,
+    'x-rapidapi-key': RAPIDAPI_KEY,
     'x-rapidapi-host': AYLIEN_RAPIDAPI_HOST
 }
 

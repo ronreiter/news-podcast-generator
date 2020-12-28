@@ -1,11 +1,19 @@
 <html>
 <head>
-    <script src="https://unpkg.com/vue"></script>
-    <script src="https://unpkg.com/buefy/dist/buefy.min.js"></script>
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css">
-    <link rel="stylesheet" href="https://jenil.github.io/bulmaswatch/darkly/bulmaswatch.min.css">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-P36872KG23"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
 
+      gtag('config', 'G-P36872KG23');
+    </script>
 
+    <script src="scripts/vue.js"></script>
+    <script src="scripts/buefy.min.js"></script>
+    <link rel="stylesheet" href="styles/bulmaswatch.min.css">
+    <script src="scripts/index.js"></script>
 </head>
 
 <body>
@@ -59,47 +67,6 @@
 
 <script>
 
-    let app = new Vue({
-        el: '#app',
-        data: {
-            articles: []
-        },
-        async mounted() {
-            let today = (new Date()).toISOString().substring(0, 10);
-            let res = await fetch(`https://bestofhn.storage.googleapis.com/news/bing_${today}.json`)
-            let data = await res.json()
-            this.articles = data.value
-        },
-        methods: {
-            timeSince: (date) => {
-
-                var seconds = Math.floor((new Date() - new Date(date)) / 1000);
-
-                var interval = seconds / 31536000;
-
-                if (interval > 1) {
-                    return Math.floor(interval) + " years";
-                }
-                interval = seconds / 2592000;
-                if (interval > 1) {
-                    return Math.floor(interval) + " months";
-                }
-                interval = seconds / 86400;
-                if (interval > 1) {
-                    return Math.floor(interval) + " days";
-                }
-                interval = seconds / 3600;
-                if (interval > 1) {
-                    return Math.floor(interval) + " hours";
-                }
-                interval = seconds / 60;
-                if (interval > 1) {
-                    return Math.floor(interval) + " minutes";
-                }
-                return Math.floor(seconds) + " seconds";
-            }
-        }
-    })
 </script>
 </body>
 </html>
