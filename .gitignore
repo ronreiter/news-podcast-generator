@@ -9,3 +9,4 @@ config.py
 venv
 ext.zip
 story_cache
+__pycache__
