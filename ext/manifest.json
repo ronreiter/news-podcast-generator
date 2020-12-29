@@ -1,7 +1,7 @@
 {
  	"manifest_version": 2,
  	"name": "TechNews",
- 	"version": "1.0.1",
+ 	"version": "1.0.2",
 	"description": "TechNews brings you the latest and greatest tech news of the day.",
 	"icons": {
 		"16": "icon16.png",
