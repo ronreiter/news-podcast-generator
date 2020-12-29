@@ -5,8 +5,7 @@ window.onload = function() {
             articles: []
         },
         async mounted() {
-            let today = (new Date()).toISOString().substring(0, 10);
-            let res = await fetch(`https://bestofhn.storage.googleapis.com/news/bing_${today}.json`)
+            let res = await fetch(`https://bestofhn.storage.googleapis.com/news/bing_ScienceAndTechnology.json`)
             let data = await res.json()
             this.articles = data.value
         },
