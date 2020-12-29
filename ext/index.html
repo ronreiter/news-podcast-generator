@@ -70,6 +70,7 @@
         <div v-if="page === 'readingList'">
             <div style="margin: 30px auto" class="is-size-3"><i class="fas fa-bookmark"></i>&nbsp; Reading List</div>
             <hr/>
+            <div v-if="readingList.length === 0">You have no items in your reading list. Click on the bookmark icon to add items to your reading list.</div>
 
             <div v-for="article in readingList" class="box" style="width: 900px; margin: 30px auto">
                 <article class="media">
