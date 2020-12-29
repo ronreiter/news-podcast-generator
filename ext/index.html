@@ -13,7 +13,9 @@
     <script src="scripts/vue.js"></script>
     <script src="scripts/buefy.min.js"></script>
     <link rel="stylesheet" href="styles/bulmaswatch.min.css">
+    <link rel="stylesheet" href="styles/all.min.css">
     <script src="scripts/index.js"></script>
+
 </head>
 
 <body>
@@ -21,45 +23,132 @@
 
     <nav class="navbar is-fixed-top is-dark">
         <div class="navbar-brand">
-            <a class="navbar-item"><strong class="is-size-5"><span style="color: lightgreen">&lt;/&gt;</span>
+            <a class="navbar-item" @click="page = 'main'"><strong class="is-size-5"><span style="color: lightgreen">&lt;/&gt;</span>
                 TechNews</strong></a>
 
-            <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false"
-               data-target="navbarBasicExample">
-                <span aria-hidden="true"></span>
-                <span aria-hidden="true"></span>
-                <span aria-hidden="true"></span>
-            </a>
         </div>
 
-        <div id="navbarBasicExample" class="navbar-menu">
+        <div class="navbar-menu">
+            <div class="navbar-start">
+                <a class="navbar-item" @click="page = 'readingList'">
+                    <i class="fas fa-bookmark"></i>&nbsp; Reading List
+                </a>
 
-        </div>
-    </nav>
+            </div>
 
-    <div class="container" style="padding-top: 60px;">
+            <div class="navbar-end">
+                <div class="navbar-item">
 
-        <div style="width: 600px; margin: 30px auto" class="is-size-3">Tech News of the day - {{ (new
-            Date()).toLocaleDateString() }}
-        </div>
-        <div v-for="article in articles" class="box" style="width: 600px; margin: 30px auto">
-
-            <article class="media">
-                <div class="media-content">
-                    <div class="content">
-                        <a :href="article.url" target="_blank">
-                            <img v-if="article.image" :src="article.image.contentUrl" style="width: 100%; margin-bottom: 20px">
-                        </a>
-                        <p class="is-size-5"><strong><a :href="article.url" target="_blank">{{ article.name }}</a></strong></p>
-                        <p>{{ article.description }}</p>
-                        <p style="color: gray; vertical-align: middle">
-                            <img style="height: 16px; margin-right: 5px" v-if="article.provider[0].image" :src="article.provider[0].image.thumbnail.contentUrl"/>
-                            <strong>{{ article.provider[0].name }}</strong>, <small>{{ timeSince(article.datePublished) }} ago</small>
+                    <div class="field has-addons">
+                        <p class="control">
+                            <button class="button" :class="{'is-primary': largeMode === false}" @click="largeMode = false">
+                              <span class="icon is-small">
+                                <i class="fas fa-list"></i>
+                              </span>
+                                <span>Compact</span>
+                            </button>
+                        </p>
+                        <p class="control">
+                            <button class="button" :class="{'is-primary': largeMode === true}" @click="largeMode = true">
+                              <span class="icon is-small">
+                                <i class="fas fa-window-maximize"></i>
+                              </span>
+                                <span>Wide</span>
+                            </button>
                         </p>
                     </div>
                 </div>
-            </article>
 
+            </div>
+        </div>
+
+
+
+    </nav>
+
+    <div class="container" style="padding-top: 60px;">
+        <div v-if="page === 'readingList'">
+            <div style="margin: 30px auto" class="is-size-3"><i class="fas fa-bookmark"></i>&nbsp; Reading List</div>
+            <hr/>
+
+            <div v-for="article in readingList" class="box" style="width: 900px; margin: 30px auto">
+                <article class="media">
+                    <div class="media-left">
+                        <a :href="article.url" target="_blank">
+                            <img v-if="article.image" :src="article.image.contentUrl" style="width: 200px; margin-bottom: 20px">
+                        </a>
+
+                    </div>
+                    <div class="media-content">
+                        <div class="content">
+                            <p class="is-size-5"><strong><a :href="article.url" target="_blank">{{ article.name }}</a></strong></p>
+                            <p>{{ article.description }}</p>
+                            <div class="columns">
+                                <div class="column">
+                                    <p style="color: gray;">
+                                        <img style="height: 16px; margin-right: 5px" v-if="article.provider[0].image" :src="article.provider[0].image.thumbnail.contentUrl"/>
+                                        <strong>{{ article.provider[0].name }}</strong>, <small>{{ timeSince(article.datePublished) }} ago</small>
+                                    </p>
+
+                                </div>
+                                <div class="column">
+                                    <button @click="removeFromReadingList(article)" class="button is-small is-pulled-right is-success"><i class="fas fa-check"></i>&nbsp; Mark as Read</button>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </div>
+
+        <div v-if="page === 'main'">
+
+            <div style="margin: 30px auto" class="is-size-3">Tech News of the day - {{ (new Date()).toLocaleDateString() }}</div>
+            <hr/>
+            <div v-for="article in articles" class="box" style="width: 600px; margin: 30px auto" v-if="largeMode">
+                <article class="media">
+                    <div class="media-content">
+                        <div class="content" style="position: relative">
+                            <a :href="article.url" target="_blank">
+                                <img v-if="article.image" :src="article.image.contentUrl" style="width: 100%; margin-bottom: 20px">
+                            </a>
+                            <button @click="addToReadingList(article)" title="Add to Reading List" class="button is-small is-success" style="position: absolute; top: 20px; right: 20px"><i class="fas fa-bookmark"></i></button>
+                            <p class="is-size-5"><strong><a :href="article.url" target="_blank">{{ article.name }}</a></strong></p>
+                            <p>{{ article.description }}</p>
+                            <p style="color: gray; vertical-align: middle">
+                                <img style="height: 16px; margin-right: 5px" v-if="article.provider[0].image" :src="article.provider[0].image.thumbnail.contentUrl"/>
+                                <strong>{{ article.provider[0].name }}</strong>, <small>{{ timeSince(article.datePublished) }} ago</small>
+                            </p>
+                        </div>
+                    </div>
+                </article>
+
+            </div>
+
+            <div v-for="article in articles" class="box" style="width: 900px; margin: 30px auto" v-if="!largeMode">
+                <article class="media">
+                    <div class="media-left">
+                        <a :href="article.url" target="_blank">
+                            <img v-if="article.image" :src="article.image.contentUrl" style="width: 200px; margin-bottom: 20px">
+                        </a>
+
+                    </div>
+                    <div class="media-content">
+                        <div class="content">
+                            <button @click="addToReadingList(article)" title="Add to Reading List" class="button is-small is-success is-pulled-right" style="margin-left: 10px"><i class="fas fa-bookmark"></i></button>
+
+                            <p class="is-size-5"><strong><a :href="article.url" target="_blank">{{ article.name }}</a></strong></p>
+                            <p>{{ article.description }}</p>
+                            <p style="color: gray; vertical-align: middle">
+                                <img style="height: 16px; margin-right: 5px" v-if="article.provider[0].image" :src="article.provider[0].image.thumbnail.contentUrl"/>
+                                <strong>{{ article.provider[0].name }}</strong>, <small>{{ timeSince(article.datePublished) }} ago</small>
+                            </p>
+                        </div>
+                    </div>
+                </article>
+            </div>
         </div>
     </div>
 
