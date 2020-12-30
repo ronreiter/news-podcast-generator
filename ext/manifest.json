@@ -1,7 +1,7 @@
 {
  	"manifest_version": 2,
  	"name": "TechNews",
- 	"version": "1.0.2",
+ 	"version": "1.0.3",
 	"description": "TechNews brings you the latest and greatest tech news of the day.",
 	"icons": {
 		"16": "icon16.png",
@@ -11,5 +11,5 @@
   	"chrome_url_overrides" : {
     	"newtab": "index.html"
   	},
-	"content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'"
+	"content_security_policy": "script-src 'self' https://www.google-analytics.com https://cdn.carbonads.com https://srv.carbonads.net 'unsafe-eval'; object-src 'self'"
 }
