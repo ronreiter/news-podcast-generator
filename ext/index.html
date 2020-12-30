@@ -26,47 +26,50 @@
 <div id="app">
 
     <nav class="navbar is-fixed-top is-dark">
-        <div class="navbar-brand">
-            <a class="navbar-item" @click="page = 'main'"><strong class="is-size-5"><span style="color: lightgreen">&lt;/&gt;</span>
-                TechNews</strong></a>
+        <div class="container">
 
-        </div>
-
-        <div class="navbar-menu">
-            <div class="navbar-start">
-                <a class="navbar-item" @click="page = 'readingList'">
-                    <i class="fas fa-bookmark"></i>&nbsp; Reading List &nbsp; <strong class="tag is-danger is-normal is-rounded" v-if="readingList.length"> {{ readingList.length }}</strong>
-                </a>
+            <div class="navbar-brand">
+                <a class="navbar-item" @click="page = 'main'"><strong class="is-size-5"><span style="color: lightgreen">&lt;/&gt;</span>
+                    TechNews</strong></a>
 
             </div>
 
-            <div class="navbar-end">
-                <div class="navbar-item">
+            <div class="navbar-menu">
+                <div class="navbar-start">
+                    <a class="navbar-item" @click="page = 'readingList'">
+                        <i class="fas fa-bookmark"></i>&nbsp; Reading List &nbsp; <strong class="tag is-danger is-normal is-rounded" v-if="readingList.length"> {{ readingList.length }}</strong>
+                    </a>
 
-                    <div class="field has-addons">
-                        <p class="control">
-                            <button class="button" :class="{'is-primary': largeMode === false}" @click="largeMode = false">
-                              <span class="icon is-small">
-                                <i class="fas fa-list"></i>
-                              </span>
-                                <span>Compact</span>
-                            </button>
-                        </p>
-                        <p class="control">
-                            <button class="button" :class="{'is-primary': largeMode === true}" @click="largeMode = true">
-                              <span class="icon is-small">
-                                <i class="fas fa-window-maximize"></i>
-                              </span>
-                                <span>Wide</span>
-                            </button>
-                        </p>
-                    </div>
                 </div>
 
+                <div class="navbar-end">
+                    <div class="navbar-item">
+
+                        <div class="field has-addons">
+                            <p class="control">
+                                <button class="button" :class="{'is-primary': largeMode === false}" @click="largeMode = false">
+                                  <span class="icon is-small">
+                                    <i class="fas fa-list"></i>
+                                  </span>
+                                    <span>Compact</span>
+                                </button>
+                            </p>
+                            <p class="control">
+                                <button class="button" :class="{'is-primary': largeMode === true}" @click="largeMode = true">
+                                  <span class="icon is-small">
+                                    <i class="fas fa-window-maximize"></i>
+                                  </span>
+                                    <span>Wide</span>
+                                </button>
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
             </div>
+
+
         </div>
-
-
 
     </nav>
 
