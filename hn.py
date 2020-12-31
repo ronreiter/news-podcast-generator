@@ -16,7 +16,7 @@ import storage
 
 logging.basicConfig(level=logging.INFO)
 
-from aylien import summarize
+from aylien import get_news_data
 from ibm_watson import TextToSpeechV1
 from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
 
@@ -103,29 +103,7 @@ def get_best_hn_urls(num=10, news_date=None):
     return links
 
 
-def get_news_data(urls):
-    out = []
 
-    for url in urls:
-        general_data, summary_data = summarize(url)
-
-        if not "title" in general_data:
-            continue
-
-        if not "sentences" in summary_data:
-            continue
-
-        out.append({
-            "title": general_data['title'],
-            "author": general_data['author'],
-            "date": general_data['publishDate'],
-            "article": general_data['article'],
-            "image": general_data['image'],
-            "sentences": summary_data['sentences'],
-            "url": url,
-        })
-
-    return out
 
 def single_file():
     news_template = t.load(jinja2.Environment(), "news.ssml")

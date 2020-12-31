@@ -17,3 +17,8 @@ def blob_exists(bucket_name, blob_name):
     bucket = storage_client.get_bucket(bucket_name)
     blob = bucket.blob(blob_name)
     return blob.exists()
+
+def get_blob(bucket_name, blob_name):
+    bucket = storage_client.get_bucket(bucket_name)
+    blob = bucket.blob(blob_name)
+    return blob.download_as_string()
