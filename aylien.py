@@ -52,7 +52,21 @@ def get_summary_for_url(url):
     return binary
 
 def get_summary_for_url_entrypoint(request):
-    return get_summary_for_url(request.args['url'])
+    if request.method == 'OPTIONS':
+        headers = {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'GET',
+            'Access-Control-Allow-Headers': 'Content-Type',
+            'Access-Control-Max-Age': '3600'
+        }
+
+        return ('', 204, headers)
+
+    headers = {
+        'Access-Control-Allow-Origin': '*'
+    }
+
+    return (get_summary_for_url(request.args['url']), 200, headers)
 
 def get_news_data(urls):
     out = []

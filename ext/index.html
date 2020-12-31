@@ -133,8 +133,14 @@
                                     </a>
                                     <button @click="addToReadingList(article)" title="Add to Reading List" class="button is-small is-success" style="position: absolute; top: 20px; right: 20px"><i class="fas fa-bookmark"></i></button>
                                     <p class="is-size-5"><strong><a :href="article.url" target="_blank">{{ article.name }}</a></strong></p>
-                                    <p>{{ article.description }}</p>
-                                    <p style="color: gray; vertical-align: middle">
+                                    <div v-if="!article.summary">
+                                        <p>{{ article.description }}</p>
+                                        <p><a @click="readMore(article)">Read summary...</a></p>
+                                    </div>
+                                    <div v-if="article.summary">
+                                        <p v-for="sentence in article.summary.sentences">{{ sentence }}</p>
+                                    </div>
+                                    <p style="color: gray; vertical-align: middle; margin-top: 20px">
                                         <img style="height: 16px; margin-right: 5px" v-if="article.provider[0].image" :src="article.provider[0].image.thumbnail.contentUrl"/>
                                         <strong>{{ article.provider[0].name }}</strong>, <small>{{ timeSince(article.datePublished) }} ago</small>
                                     </p>
@@ -163,8 +169,14 @@
                                     <button @click="addToReadingList(article)" title="Add to Reading List" class="button is-small is-success is-pulled-right" style="margin-left: 10px"><i class="fas fa-bookmark"></i></button>
 
                                     <p class="is-size-5"><strong><a :href="article.url" target="_blank">{{ article.name }}</a></strong></p>
-                                    <p>{{ article.description }}</p>
-                                    <p style="color: gray; vertical-align: middle">
+                                    <div v-if="!article.summary">
+                                        <p>{{ article.description }}</p>
+                                        <p><a @click="readMore(article)">Read summary...</a></p>
+                                    </div>
+                                    <div v-if="article.summary">
+                                        <p v-for="sentence in article.summary.sentences">{{ sentence }}</p>
+                                    </div>
+                                    <p style="color: gray; vertical-align: middle; margin-top: 20px">
                                         <img style="height: 16px; margin-right: 5px" v-if="article.provider[0].image" :src="article.provider[0].image.thumbnail.contentUrl"/>
                                         <strong>{{ article.provider[0].name }}</strong>, <small>{{ timeSince(article.datePublished) }} ago</small>
                                     </p>

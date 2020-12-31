@@ -74,6 +74,17 @@ window.onload = function() {
                 }
                 return true
             },
+            readMore: async function(article) {
+                let res = await fetch(`https://us-central1-linkedbbapp.cloudfunctions.net/get-summary?url=` + article.url)
+                let data = await res.json()
+
+                for (let i = 0; i < this.articles.length; i++) {
+                    if (this.articles[i].url === article.url) {
+                        this.articles[i].summary = data
+                    }
+                }
+                this.$forceUpdate()
+            }
         },
         watch: {
             largeMode: function(newVal, oldVal) {
