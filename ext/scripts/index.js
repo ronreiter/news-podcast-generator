@@ -13,6 +13,9 @@ window.onload = function() {
     let app = new Vue({
         el: '#app',
         data: {
+            feedbackModelActive: false,
+            submittingFeedback: false,
+            feedbackText: "",
             articles: [],
             largeMode: true,
             readingList: [],
@@ -28,6 +31,21 @@ window.onload = function() {
             if (localStorage.getItem("readingList")) {
                 this.readingList = JSON.parse(localStorage.getItem("readingList"))
             }
+
+            let timesOpened = localStorage.getItem("timesOpened")
+            if (!timesOpened) {
+                timesOpened = 0
+            } else {
+                timesOpened = parseInt(timesOpened)
+            }
+            timesOpened += 1
+
+            if (timesOpened === 10 || timesOpened === 50 || timesOpened === 200) {
+                this.openFeedback()
+            }
+
+            localStorage.setItem("timesOpened", timesOpened.toString())
+
         },
         methods: {
             timeSince: function(date) {
@@ -91,6 +109,27 @@ window.onload = function() {
                 articleRef.summary = data
 
                 this.$forceUpdate()
+            },
+            async submitFeedback() {
+                this.submittingFeedback = true
+                this.$forceUpdate()
+                await fetch("https://us-central1-linkedbbapp.cloudfunctions.net/collect-feedback", {
+                    method: "post",
+                    headers: {"Content-type": "application/json; charset=UTF-8"},
+                    body: JSON.stringify({
+                        "text": this.feedbackText
+                    })
+                })
+                this.submittingFeedback = false
+
+                this.closeFeedback()
+            },
+            closeFeedback() {
+                this.feedbackModelActive = false
+            },
+            openFeedback() {
+                this.feedbackModelActive = true
+
             }
         },
         watch: {

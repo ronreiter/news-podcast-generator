@@ -24,6 +24,40 @@
 
 
 <div id="app">
+    <div class="modal" :class="{'is-active': feedbackModelActive}">
+        <div class="modal-background"></div>
+        <div class="modal-content">
+
+
+            <form class="form-horizontal box">
+                <fieldset>
+
+                    <!-- Form Name -->
+                    <legend></legend>
+
+                    <!-- Textarea -->
+                    <div class="field">
+                        <label class="label" for="feedback-text">Tell us what you think about TechNews, and how we can improve!</label>
+                        <div class="control">
+                            <textarea class="textarea" id="feedback-text" name="feedback-text" placeholder="e.g. I love your Chrome Extension!" v-model="feedbackText"></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Button -->
+                    <div class="field">
+                        <div class="control">
+                            <a class="button is-success" @click="submitFeedback" :class="{'is-loading': submittingFeedback}">Submit Feedback</a>
+                            <a class="button" @click="closeFeedback">Cancel</a>
+                        </div>
+                    </div>
+
+                </fieldset>
+            </form>
+
+        </div>
+        <button class="modal-close is-large" aria-label="close"></button>
+    </div>
+
 
     <nav class="navbar is-fixed-top is-dark">
         <div class="container">
@@ -38,6 +72,9 @@
                 <div class="navbar-start">
                     <a class="navbar-item" @click="page = 'readingList'">
                         <i class="fas fa-bookmark"></i>&nbsp; Reading List &nbsp; <strong class="tag is-danger is-normal is-rounded" v-if="readingList.length"> {{ readingList.length }}</strong>
+                    </a>
+                    <a class="navbar-item" @click="openFeedback()">
+                        <i class="fas fa-comment"></i>&nbsp; Submit Feedback
                     </a>
 
                 </div>
