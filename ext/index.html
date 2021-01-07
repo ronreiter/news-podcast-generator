@@ -135,7 +135,8 @@
                                     <p class="is-size-5"><strong><a :href="article.url" target="_blank">{{ article.name }}</a></strong></p>
                                     <div v-if="!article.summary">
                                         <p>{{ article.description }}</p>
-                                        <p><a @click="readMore(article)">Read summary...</a></p>
+                                        <p v-if="!article.loading"><a @click="readMore(article)" class="button is-success">Read summary</a></p>
+                                        <p v-if="article.loading"><a class="button is-success is-loading is-disabled">Read summary</a></p>
                                     </div>
                                     <div v-if="article.summary">
                                         <p v-for="sentence in article.summary.sentences">{{ sentence }}</p>
@@ -161,6 +162,7 @@
                             <div class="media-left">
                                 <a :href="article.url" target="_blank">
                                     <img v-if="article.image" :src="article.image.contentUrl" style="width: 200px; margin-bottom: 20px">
+                                    <div v-if="!article.image" style="width: 200px"></div>
                                 </a>
 
                             </div>
@@ -171,7 +173,8 @@
                                     <p class="is-size-5"><strong><a :href="article.url" target="_blank">{{ article.name }}</a></strong></p>
                                     <div v-if="!article.summary">
                                         <p>{{ article.description }}</p>
-                                        <p><a @click="readMore(article)">Read summary...</a></p>
+                                        <p v-if="!article.loading"><a @click="readMore(article)" class="button is-success">Read summary</a></p>
+                                        <p v-if="article.loading"><a class="button is-success is-loading is-disabled">Read summary</a></p>
                                     </div>
                                     <div v-if="article.summary">
                                         <p v-for="sentence in article.summary.sentences">{{ sentence }}</p>
